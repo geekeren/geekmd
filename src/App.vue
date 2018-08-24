@@ -1,21 +1,36 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
+    <Header />
+    <markdown />
   </div>
 </template>
 
 <script lang="ts">
 import { Vue } from 'vue-property-decorator';
-export default class App extends Vue {}
+import Component from 'vue-class-component';
+import markdown from './components/markdown.vue';
+import Header from './components/header.vue';
+@Component({
+    components: { markdown, Header },
+})
+export default class App extends Vue {
+
+}
 </script>
 
 <style lang="scss">
 #app {
+  width: 100%;
+  height: 100vh;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  flex-direction: column;
 }
+  body {
+    margin: 0px;
+    padding: 0px;
+  }
 </style>
