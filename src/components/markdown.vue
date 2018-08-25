@@ -113,7 +113,8 @@
       overflow-x: hidden;
       overflow-y: auto;
       margin: 0px;
-      border-radius: 2px;
+      /*-webkit-border-radius: 2px;*/
+      /*border-radius: 2px;*/
     }
     .parsed-html {
       min-height: 100%;
@@ -129,12 +130,12 @@
       -moz-appearance: none;
       background-color: transparent;
       border: none;
-      border-radius: .4rem;
+      resize: none;
+      /*border-radius: .4rem;*/
       box-shadow: none;
       box-sizing: inherit;
       color: #fff;
       width: 100%;
-      height: 100%;
       outline: none;
       padding-top: 3.5em;
     }
@@ -175,6 +176,7 @@
         margin: 0 auto;
         padding: 3.5em 20px;
         box-shadow: 3px 5px 20px #b8dcec;
+        border: 0.5px solid #d8e7f3;
       }
       .copyright-info {
         display: block;
