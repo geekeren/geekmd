@@ -8,10 +8,9 @@
   import {Vue} from "vue-property-decorator";
   import Component from "vue-class-component";
   import markdown from "./components/markdown.vue";
-  import Header from "./components/header.vue";
 
   @Component({
-    components: {markdown, Header},
+    components: {markdown},
   })
   export default class App extends Vue {
 

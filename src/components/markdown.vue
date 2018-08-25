@@ -50,8 +50,15 @@
     public parsedHtml: string = "";
 
     mounted() {
-      const content: string | null = localStorage.getItem("md.content");
-      this.rawInputMd = JSON.parse(content || "");
+      let content: string | null = JSON.parse(localStorage.getItem("md.content"));
+      if(!content) {
+        this.$http.get("/data/example.md")
+          .then(data => {
+            this.rawInputMd = data.body;
+            this.updateHtmlPreview();
+          });
+      }
+      this.rawInputMd = content;
       this.updateHtmlPreview();
       const parsedHtmlNode: Element = this.$refs.parsedHtmlNode;
       const copyBtn: NodeListOf<Element> = this.$refs.button;
@@ -109,6 +116,7 @@
       border-radius: 2px;
     }
     .parsed-html {
+      min-height: 100%;
       margin-top: 3em;
     }
     .content {
