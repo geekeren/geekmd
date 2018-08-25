@@ -9,8 +9,3 @@
 
     }
 </script>
-<style lang="scss">
-  header {
-    padding: 15px 30px;
-  }
-</style>

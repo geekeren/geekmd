@@ -25,10 +25,13 @@ a:hover {
 }
 
 img {
+	text-align: center;
+	margin: 0 auto;
 	max-width: 100%;
 }
 
 pre {
+	white-space: pre;
 	background: #f4fcff;
 	border-radius: 5px;
 	font-size: 0.8em;
@@ -216,3 +219,7 @@ textarea {
 	line-height: 1.1em;
 }
 
+header {
+	padding: 0.6em 30px;
+	position: absolute;
+}

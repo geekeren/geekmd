@@ -1,17 +1,25 @@
-<template xmlns:v-clipboard="http://www.w3.org/1999/xhtml">
+<template>
   <div class='markdown-container'>
     <div class='markdown-input-section section'>
-            <textarea
-                name=""
-                class='edit-text-area content'
+      <header>
+        <span class="title menu_item">极客MD编辑器</span>
+      </header>
+      <textarea class='edit-text-area content'
                 v-model='rawInputMd'
                 @input='onMdInput'>
-            </textarea>
+      </textarea>
     </div>
-    <button ref="button">Copy!</button>
-    <div class='html-preview-section section content'
-         ref="parsedHtml"
-         v-html='parsedHtml'>
+    <div class='html-preview-section section'>
+      <header>
+        <button class="menu_item" ref="button">复制</button>
+      </header>
+      <div class='html-preview-content content mail-content'
+           ref="parsedHtmlNode">
+        <div class="parsed-html" v-html='parsedHtml'></div>
+        <div class="copyright-info">
+          本邮件自豪地采用了“<a href="https://md.wangbaiyuan.cn">极客MD</a>”编辑
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -21,79 +29,94 @@
   import {highlightAuto} from "highlight.js";
   import Clipboard from "clipboard";
 
-
   Marked.setOptions
-    ({
-        renderer: new Renderer(),
-        gfm: true,
-        tables: true,
-        breaks: false,
-        pedantic: false,
-        sanitize: false,
-        smartLists: true,
-        smartypants: false,
-        highlight: (code) => {
-            return highlightAuto(code).value;
-        },
+  ({
+    renderer: new Renderer(),
+    gfm: true,
+    tables: true,
+    breaks: false,
+    pedantic: false,
+    sanitize: false,
+    smartLists: true,
+    smartypants: false,
+    highlight: (code) => {
+      return highlightAuto(code).value;
+    },
 
-    });
-    @Component
-    export default class Markdown extends Vue {
-      public rawInputMd: string = "";
-      public parsedHtml: string = "";
+  });
+  @Component
+  export default class Markdown extends Vue {
+    public rawInputMd: string = "";
+    public parsedHtml: string = "";
 
-      mounted() {
-        this.rawInputMd = JSON.parse(localStorage.getItem("md.content"));
-        this.updateHtmlPreview();
-        const parsedHtmlNode = this.$refs.parsedHtml;
-        new Clipboard(this.$refs.button, {
-          target: function () {
-            return parsedHtmlNode;
-          }
-        });
-      }
-
-      public onMdInput() {
-        this.updateHtmlPreview();
-        localStorage.setItem("md.content", JSON.stringify(this.rawInputMd));
-        }
-
-      protected updateHtmlPreview() {
-        this.parsedHtml = Marked.parse(this.rawInputMd);
-      }
-
-      protected onCopy(e: any) {
-        // alert('You just copied: ' + e)
-      }
-
-      protected onError(e: any) {
-        // alert('Failed to copy texts')
-      }
+    mounted() {
+      const content: string | null = localStorage.getItem("md.content");
+      this.rawInputMd = JSON.parse(content || "");
+      this.updateHtmlPreview();
+      const parsedHtmlNode: Element = this.$refs.parsedHtmlNode;
+      const copyBtn: NodeListOf<Element> = this.$refs.button;
+      const clipboard = new Clipboard( copyBtn, {
+        target: (elem : any) => parsedHtmlNode
+      });
+      clipboard.on("success", this.onCopy);
+      clipboard.on("error", this.onError);
     }
+
+    public onMdInput(e: any) {
+      this.updateHtmlPreview();
+      localStorage.setItem("md.content", JSON.stringify(this.rawInputMd));
+    }
+
+    protected updateHtmlPreview() {
+      const mdToParsed = this.parseRawMd(this.rawInputMd);
+      this.parsedHtml = Marked.parse(mdToParsed);
+    }
+
+    protected onCopy(e: any) {
+      alert("复制成功!");
+    }
+
+    protected onError(e: any) {
+      alert("复制失败");
+    }
+
+    private parseRawMd(rawMd: string) {
+      return rawMd.replace("\n", "\r\n\n");
+    }
+  }
 </script>
 <style lang="scss">
 
   .markdown-container {
     width: 100%;
+    height: 100%;
     flex: 2;
     display: -webkit-flex;
     display: flex;
     flex-direction: row;
     background: #eee;
     .section {
+      position: relative;
       text-align: left;
       -webkit-box-flex: 1;
       -ms-flex: 1;
       flex: 1;
+      display: flex;
+      flex-direction: column;
       overflow-x: hidden;
       overflow-y: auto;
-      margin: 3px 5px;
+      margin: 0px;
       border-radius: 2px;
+    }
+    .parsed-html {
+      margin-top: 3em;
     }
     .content {
       padding: 14px;
+      flex: 1;
+      overflow: auto;
     }
-    textarea {
+    .edit-text-area {
       -webkit-appearance: none;
       -moz-appearance: none;
       background-color: transparent;
@@ -104,12 +127,56 @@
       color: #fff;
       width: 100%;
       height: 100%;
+      outline: none;
+      padding-top: 3.5em;
     }
     .markdown-input-section {
       background: #333;
+      header {
+        .title {
+          color: #20d6ff;
+        }
+      }
     }
     .html-preview-section {
       background: #fff;
+      .copyright-info {
+        display: none;
+      }
+      header {
+        text-align: right;
+        right: 0px;
+        .menu_item {
+          background: #1e6bb8;
+          color: white;
+          padding: 8px 12px;
+        }
+
+        .menu_item:hover {
+          background: #20d6ff;
+          box-shadow: #20d6ff;
+          cursor: pointer;
+        }
+      }
+    }
+    .mail-content {
+      padding: 2px;
+      .parsed-html {
+        background: #ffffff;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 3.5em 20px;
+        box-shadow: 3px 5px 20px #b8dcec;
+      }
+      .copyright-info {
+        display: block;
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 12px;
+        font-size: 12px;
+        text-align: right;
+        font-style: italic;
+      }
     }
   }
 

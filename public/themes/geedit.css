@@ -136,3 +136,16 @@ li p {
 	font-size: 14px;
 	color: #384452;
 }
+
+header button {
+	border: solid 1px #e6f1ff;
+	outline: none;
+}
+
+header .menu_item {
+	padding: 2px 8px;
+	background: rgba(150, 150, 150, 0.15);
+	color: #20d6ff;
+	border-radius: 3px;
+	font-size: 1em;
+}
