@@ -27,14 +27,14 @@
   </div>
 </template>
 <script lang='ts'>
-  import {Component, Vue} from "vue-property-decorator";
-  import Clipboard from "clipboard";
-  import markdown from "./markdown";
+  import {Component, Vue} from 'vue-property-decorator';
+  import Clipboard from 'clipboard';
+  import markdown from './markdown';
 
   @Component
   export default class Markdown extends Vue {
-    public rawInputMd: string = "";
-    public parsedHtml: string = "";
+    public rawInputMd: string = '';
+    public parsedHtml: string = '';
     public imageReader: FileReader = new FileReader();
 
     private mounted() {
@@ -43,10 +43,10 @@
     }
 
     private loadDefaultContent() {
-      const content: string | null = JSON.parse(localStorage.getItem("md.content")!);
-      markdown.image_add(1, localStorage.getItem("md.images[1]"));
+      const content: string | null = JSON.parse(localStorage.getItem('md.content')!);
+      markdown.image_add(1, localStorage.getItem('md.images[1]'));
       if (!content) {
-        this.$http.get("/data/example.md")
+        this.$http.get('/data/example.md')
           .then((data: any) => {
             this.rawInputMd = data.body;
             this.updateHtmlPreview();
@@ -63,11 +63,11 @@
       const clipboard = new Clipboard( copyBtn, {
         target: () => parsedHtmlNode,
       });
-      clipboard.on("success", this.onCopy);
-      clipboard.on("error", this.onError);
+      clipboard.on('success', this.onCopy);
+      clipboard.on('error', this.onError);
 
       const inputTextArea: HTMLTextAreaElement = this.$refs.inputTextArea as HTMLTextAreaElement;
-      inputTextArea.addEventListener("paste", (e: ClipboardEvent) => {
+      inputTextArea.addEventListener('paste', (e: ClipboardEvent) => {
         const clipboardData = e.clipboardData;
         if (clipboardData) {
           const items = clipboardData.items;
@@ -77,12 +77,12 @@
           const types = clipboardData.types || [];
           let item = null;
           for (let i = 0; i < types.length; i++) {
-            if (types[i] === "Files") {
+            if (types[i] === 'Files') {
               item = items[i];
               break;
             }
           }
-          if (item && item.kind === "file") {
+          if (item && item.kind === 'file') {
             e.preventDefault();
             e.stopPropagation();
             const oFile = item.getAsFile();
@@ -90,9 +90,9 @@
             const thiz = this;
             this.imageReader.onload = () => {
               if (thiz.imageReader) {
-                const result = thiz.imageReader.result!.toString() || "";
+                const result = thiz.imageReader.result!.toString() || '';
                 markdown.image_add(1, result);
-                localStorage.setItem("md.images[1]", result);
+                localStorage.setItem('md.images[1]', result);
                 thiz.rawInputMd = `![dd](1)`;
                 // oFile.miniurl = result;
                 // oFile._name = oFile.name.replace(/[\[\]\(\)\+\{\}&\|\\\*^%$#@\-]/g, '');
@@ -108,7 +108,7 @@
 
     private onMdInput(e: any) {
       this.updateHtmlPreview();
-      localStorage.setItem("md.content", JSON.stringify(this.rawInputMd));
+      localStorage.setItem('md.content', JSON.stringify(this.rawInputMd));
     }
 
     private updateHtmlPreview() {
@@ -117,15 +117,15 @@
     }
 
     private onCopy(e: any) {
-      alert("复制成功!");
+      alert('复制成功!');
     }
 
     private onError(e: any) {
-      alert("复制失败");
+      alert('复制失败');
     }
 
     private parseRawMd(rawMd: string) {
-      return rawMd.replace("\n", "\r\n\n");
+      return rawMd.replace('\n', '\r\n\n');
     }
   }
 </script>

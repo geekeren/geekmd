@@ -5,9 +5,9 @@
 </template>
 
 <script lang='ts'>
-  import {Vue} from "vue-property-decorator";
-  import Component from "vue-class-component";
-  import markdown from "./components/markdown.vue";
+  import {Vue} from 'vue-property-decorator';
+  import Component from 'vue-class-component';
+  import markdown from './components/markdown.vue';
 
   @Component({
     components: {markdown},
