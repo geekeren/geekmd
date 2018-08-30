@@ -2,10 +2,11 @@
   <div class='markdown-container'>
     <div class='markdown-input-section section'>
       <header>
-        <span class="title menu_item">极客MD编辑器</span>
+        <span class='title menu_item'>极客MD编辑器</span>
       </header>
       <textarea
-          ref="inputTextArea"
+          autocomplete='off'
+          ref='inputTextArea'
           class='edit-text-area content'
           v-model='rawInputMd'
           @input='onMdInput'>
@@ -13,13 +14,13 @@
     </div>
     <div class='html-preview-section section'>
       <header>
-        <button class="menu_item" ref="button">复制</button>
+        <button class='menu_item' ref='button'>复制</button>
       </header>
       <div class='html-preview-content content mail-content'
-           ref="parsedHtmlNode">
-        <div class="parsed-html" v-html='parsedHtml'></div>
-        <div class="copyright-info">
-          本邮件自豪地采用了“<a href="https://md.wangbaiyuan.cn">极客MD</a>”编辑
+           ref='parsedHtmlNode'>
+        <div class='parsed-html' v-html='parsedHtml'></div>
+        <div class='copyright-info'>
+          本邮件自豪地采用了“<a href='https://md.wangbaiyuan.cn'>极客MD</a>”编辑
         </div>
       </div>
     </div>
@@ -34,19 +35,19 @@
   export default class Markdown extends Vue {
     public rawInputMd: string = "";
     public parsedHtml: string = "";
-    public imageReader: FileReader;
+    public imageReader: FileReader = new FileReader();
 
-    mounted() {
+    private mounted() {
       this.loadDefaultContent();
       this.registerEvents();
     }
 
     private loadDefaultContent() {
-      let content: string | null = JSON.parse(localStorage.getItem("md.content"));
+      const content: string | null = JSON.parse(localStorage.getItem("md.content")!);
       markdown.image_add(1, localStorage.getItem("md.images[1]"));
       if (!content) {
         this.$http.get("/data/example.md")
-          .then(data => {
+          .then((data: any) => {
             this.rawInputMd = data.body;
             this.updateHtmlPreview();
           });
@@ -57,23 +58,25 @@
     }
 
     private registerEvents() {
-      const parsedHtmlNode: Element = this.$refs.parsedHtmlNode;
-      const copyBtn: NodeListOf<Element> = this.$refs.button;
+      const parsedHtmlNode: Element = this.$refs.parsedHtmlNode as Element;
+      const copyBtn: Element = this.$refs.button as Element;
       const clipboard = new Clipboard( copyBtn, {
-        target: (elem : any) => parsedHtmlNode
+        target: () => parsedHtmlNode,
       });
       clipboard.on("success", this.onCopy);
       clipboard.on("error", this.onError);
 
-      const inputTextArea: HTMLTextAreaElement = this.$refs.inputTextArea;
+      const inputTextArea: HTMLTextAreaElement = this.$refs.inputTextArea as HTMLTextAreaElement;
       inputTextArea.addEventListener("paste", (e: ClipboardEvent) => {
-        var clipboardData = e.clipboardData;
+        const clipboardData = e.clipboardData;
         if (clipboardData) {
-          var items = clipboardData.items;
-          if (!items) return;
-          var types = clipboardData.types || [];
-          var item = null;
-          for (var i = 0; i < types.length; i++) {
+          const items = clipboardData.items;
+          if (!items) {
+            return;
+          }
+          const types = clipboardData.types || [];
+          let item = null;
+          for (let i = 0; i < types.length; i++) {
             if (types[i] === "Files") {
               item = items[i];
               break;
@@ -82,12 +85,12 @@
           if (item && item.kind === "file") {
             e.preventDefault();
             e.stopPropagation();
-            var oFile = item.getAsFile();
+            const oFile = item.getAsFile();
             this.imageReader = new FileReader();
             const thiz = this;
-            this.imageReader.onload = function () {
+            this.imageReader.onload = () => {
               if (thiz.imageReader) {
-                const result = thiz.imageReader.result.toString() || "";
+                const result = thiz.imageReader.result!.toString() || "";
                 markdown.image_add(1, result);
                 localStorage.setItem("md.images[1]", result);
                 thiz.rawInputMd = `![dd](1)`;
@@ -103,21 +106,21 @@
       });
     }
 
-    public onMdInput(e: any) {
+    private onMdInput(e: any) {
       this.updateHtmlPreview();
       localStorage.setItem("md.content", JSON.stringify(this.rawInputMd));
     }
 
-    protected updateHtmlPreview() {
+    private updateHtmlPreview() {
       const mdToParsed = this.parseRawMd(this.rawInputMd);
       this.parsedHtml = markdown.render(mdToParsed);
     }
 
-    protected onCopy(e: any) {
+    private onCopy(e: any) {
       alert("复制成功!");
     }
 
-    protected onError(e: any) {
+    private onError(e: any) {
       alert("复制失败");
     }
 
@@ -126,7 +129,7 @@
     }
   }
 </script>
-<style lang="scss">
+<style lang='scss'>
 
   .markdown-container {
     width: 100%;

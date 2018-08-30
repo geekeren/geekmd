@@ -1,10 +1,10 @@
 <template>
-  <div id="app">
+  <div id='app'>
     <markdown/>
   </div>
 </template>
 
-<script lang="ts">
+<script lang='ts'>
   import {Vue} from "vue-property-decorator";
   import Component from "vue-class-component";
   import markdown from "./components/markdown.vue";
@@ -17,7 +17,7 @@
   }
 </script>
 
-<style lang="scss">
+<style lang='scss'>
   @import '~highlight.js/styles/github.css';
 
   #app {
