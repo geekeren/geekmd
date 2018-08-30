@@ -4,9 +4,11 @@
       <header>
         <span class="title menu_item">极客MD编辑器</span>
       </header>
-      <textarea class='edit-text-area content'
-                v-model='rawInputMd'
-                @input='onMdInput'>
+      <textarea
+          ref="inputTextArea"
+          class='edit-text-area content'
+          v-model='rawInputMd'
+          @input='onMdInput'>
       </textarea>
     </div>
     <div class='html-preview-section section'>
@@ -24,42 +26,37 @@
   </div>
 </template>
 <script lang='ts'>
-  import {Marked, Renderer} from "marked-ts";
   import {Component, Vue} from "vue-property-decorator";
-  import {highlightAuto} from "highlight.js";
   import Clipboard from "clipboard";
+  import markdown from "./markdown";
 
-  Marked.setOptions
-  ({
-    renderer: new Renderer(),
-    gfm: true,
-    tables: true,
-    breaks: false,
-    pedantic: false,
-    sanitize: false,
-    smartLists: true,
-    smartypants: false,
-    highlight: (code) => {
-      return highlightAuto(code).value;
-    },
-
-  });
   @Component
   export default class Markdown extends Vue {
     public rawInputMd: string = "";
     public parsedHtml: string = "";
+    public imageReader: FileReader;
 
     mounted() {
+      this.loadDefaultContent();
+      this.registerEvents();
+    }
+
+    private loadDefaultContent() {
       let content: string | null = JSON.parse(localStorage.getItem("md.content"));
-      if(!content) {
+      markdown.image_add(1, localStorage.getItem("md.images[1]"));
+      if (!content) {
         this.$http.get("/data/example.md")
           .then(data => {
             this.rawInputMd = data.body;
             this.updateHtmlPreview();
           });
+      } else {
+        this.rawInputMd = content;
       }
-      this.rawInputMd = content;
       this.updateHtmlPreview();
+    }
+
+    private registerEvents() {
       const parsedHtmlNode: Element = this.$refs.parsedHtmlNode;
       const copyBtn: NodeListOf<Element> = this.$refs.button;
       const clipboard = new Clipboard( copyBtn, {
@@ -67,6 +64,43 @@
       });
       clipboard.on("success", this.onCopy);
       clipboard.on("error", this.onError);
+
+      const inputTextArea: HTMLTextAreaElement = this.$refs.inputTextArea;
+      inputTextArea.addEventListener("paste", (e: ClipboardEvent) => {
+        var clipboardData = e.clipboardData;
+        if (clipboardData) {
+          var items = clipboardData.items;
+          if (!items) return;
+          var types = clipboardData.types || [];
+          var item = null;
+          for (var i = 0; i < types.length; i++) {
+            if (types[i] === "Files") {
+              item = items[i];
+              break;
+            }
+          }
+          if (item && item.kind === "file") {
+            e.preventDefault();
+            e.stopPropagation();
+            var oFile = item.getAsFile();
+            this.imageReader = new FileReader();
+            const thiz = this;
+            this.imageReader.onload = function () {
+              if (thiz.imageReader) {
+                const result = thiz.imageReader.result.toString() || "";
+                markdown.image_add(1, result);
+                localStorage.setItem("md.images[1]", result);
+                thiz.rawInputMd = `![dd](1)`;
+                // oFile.miniurl = result;
+                // oFile._name = oFile.name.replace(/[\[\]\(\)\+\{\}&\|\\\*^%$#@\-]/g, '');
+              }
+            };
+            if (oFile) {
+              this.imageReader.readAsDataURL(oFile);
+            }
+          }
+        }
+      });
     }
 
     public onMdInput(e: any) {
@@ -76,7 +110,7 @@
 
     protected updateHtmlPreview() {
       const mdToParsed = this.parseRawMd(this.rawInputMd);
-      this.parsedHtml = Marked.parse(mdToParsed);
+      this.parsedHtml = markdown.render(mdToParsed);
     }
 
     protected onCopy(e: any) {
