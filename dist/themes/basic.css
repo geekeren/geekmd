@@ -31,6 +31,7 @@ img {
 }
 
 pre {
+	overflow: auto;
 	white-space: pre;
 	background: #f4fcff;
 	border-radius: 5px;
