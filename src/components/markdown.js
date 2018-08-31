@@ -18,6 +18,7 @@ import mark from 'markdown-it-mark';
 import taskLists from 'markdown-it-task-lists';
 import toc from 'markdown-it-toc';
 import imagePreview from 'markdown-it-images-preview';
+import implicitFigures from 'markdown-it-implicit-figures';
 
 const markdown = MarkdownIt({
   html: true,
@@ -43,5 +44,11 @@ markdown.use(emoji)
     .use(mark)
     .use(taskLists)
     .use(imagePreview)
+    .use(implicitFigures, {
+      dataType: false,
+      figcaption: true,
+      tabindex: false,
+      link: false
+    })
     .use(toc);
 export default markdown;

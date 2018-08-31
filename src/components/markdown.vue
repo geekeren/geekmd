@@ -8,8 +8,7 @@
           autocomplete='off'
           ref='inputTextArea'
           class='edit-text-area content'
-          v-model='rawInputMd'
-          @input='onMdInput'>
+          v-model='rawInputMd'>
       </textarea>
     </div>
     <div class='html-preview-section section'>
@@ -18,7 +17,7 @@
       </header>
       <div class='html-preview-content content mail-content'
            ref='parsedHtmlNode'>
-        <div class='parsed-html' v-html='parsedHtml'></div>
+        <div class='parsed-html' v-html='parsedHtml()'></div>
         <div class='copyright-info'>
           本邮件自豪地采用了“<a href='https://md.wangbaiyuan.cn'>极客MD</a>”编辑
         </div>
@@ -30,34 +29,51 @@
   import {Component, Vue} from 'vue-property-decorator';
   import Clipboard from 'clipboard';
   import markdown from './markdown';
+  import EditHelper from '../utils/edit-helper';
+  import MdImage from '../models/Image';
 
   @Component
   export default class Markdown extends Vue {
     public rawInputMd: string = '';
-    public parsedHtml: string = '';
-    public imageReader: FileReader = new FileReader();
+    public editHelper: EditHelper | null = null;
+    public imageStorage: MdImage[] = [];
 
     private mounted() {
+      this.editHelper = new EditHelper(this.$refs.inputTextArea as HTMLTextAreaElement);
       this.loadDefaultContent();
       this.registerEvents();
     }
 
     private loadDefaultContent() {
-      const content: string | null = JSON.parse(localStorage.getItem('md.content')!);
-      markdown.image_add(1, localStorage.getItem('md.images[1]'));
+      const content : string | null = localStorage.getItem('md.content');
+      this.imageStorage = JSON.parse(localStorage.getItem('md.images') || '') as Array<MdImage>;
+      if(this.imageStorage && this.imageStorage.constructor === Array && this.imageStorage.length > 0) {
+        this.imageStorage.forEach((image: MdImage) => {
+          markdown.image_add(`./${image.id}`, image.data);
+        })
+      } else {
+        this.imageStorage = [];
+      }
       if (!content) {
         this.$http.get('/data/example.md')
           .then((data: any) => {
             this.rawInputMd = data.body;
-            this.updateHtmlPreview();
           });
       } else {
         this.rawInputMd = content;
       }
-      this.updateHtmlPreview();
     }
 
     private registerEvents() {
+      this.$watch('rawInputMd', function (newValue, oldValue) {
+        if(!newValue) {
+          this.imageStorage = [];
+        }
+        localStorage.setItem('md.content', newValue);
+      }.bind(this));
+      this.$watch('imageStorage', function (newValue, oldValue) {
+        localStorage.setItem('md.images', JSON.stringify(newValue));
+      });
       const parsedHtmlNode: Element = this.$refs.parsedHtmlNode as Element;
       const copyBtn: Element = this.$refs.button as Element;
       const clipboard = new Clipboard( copyBtn, {
@@ -86,34 +102,38 @@
             e.preventDefault();
             e.stopPropagation();
             const oFile = item.getAsFile();
-            this.imageReader = new FileReader();
-            const thiz = this;
-            this.imageReader.onload = () => {
-              if (thiz.imageReader) {
-                const result = thiz.imageReader.result!.toString() || '';
-                markdown.image_add(1, result);
-                localStorage.setItem('md.images[1]', result);
-                thiz.rawInputMd = `![dd](1)`;
-                // oFile.miniurl = result;
-                // oFile._name = oFile.name.replace(/[\[\]\(\)\+\{\}&\|\\\*^%$#@\-]/g, '');
+            const imageReader = new FileReader();
+            imageReader.onload = () => {
+              if (imageReader) {
+                const result = imageReader.result!.toString() || '';
+                const image = new MdImage({
+                  id: 0,
+                  name: "图片描述",
+                  data: result,
+              });
+                this.addImage(image);
+                  this.editHelper!
+                    .insertTextAtCursor(`![${image.name}](./${image.id})` || '')
+                    .then(output => this.rawInputMd = output);
               }
             };
             if (oFile) {
-              this.imageReader.readAsDataURL(oFile);
+              imageReader.readAsDataURL(oFile);
             }
           }
         }
       });
     }
 
-    private onMdInput(e: any) {
-      this.updateHtmlPreview();
-      localStorage.setItem('md.content', JSON.stringify(this.rawInputMd));
+    private addImage(image: MdImage) {
+      image.id = `${this.imageStorage.length + 1}`;
+      this.imageStorage.push(image);
+      markdown.image_add(`./${image.id}`, image.data);
     }
 
-    private updateHtmlPreview() {
+    private parsedHtml() {
       const mdToParsed = this.parseRawMd(this.rawInputMd);
-      this.parsedHtml = markdown.render(mdToParsed);
+      return markdown.render(mdToParsed);
     }
 
     private onCopy(e: any) {
