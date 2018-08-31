@@ -6,7 +6,7 @@ export default class EditHelper {
 
   public insertTextAtCursor(text: string): Promise<string> {
     this.inputTextArea.focus();
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       const isSuccess = document.execCommand('insertText', false, text);
       if (!isSuccess && typeof this.inputTextArea.setRangeText === 'function') {
         const start = this.inputTextArea.selectionStart;

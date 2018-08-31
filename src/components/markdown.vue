@@ -45,12 +45,12 @@
     }
 
     private loadDefaultContent() {
-      const content : string | null = localStorage.getItem('md.content');
-      this.imageStorage = JSON.parse(localStorage.getItem('md.images') || '') as Array<MdImage>;
-      if(this.imageStorage && this.imageStorage.constructor === Array && this.imageStorage.length > 0) {
+      const content: string | null = localStorage.getItem('md.content');
+      this.imageStorage = JSON.parse(localStorage.getItem('md.images') || '') as MdImage[];
+      if (this.imageStorage && this.imageStorage.constructor === Array && this.imageStorage.length > 0) {
         this.imageStorage.forEach((image: MdImage) => {
           markdown.image_add(`./${image.id}`, image.data);
-        })
+        });
       } else {
         this.imageStorage = [];
       }
@@ -65,13 +65,14 @@
     }
 
     private registerEvents() {
-      this.$watch('rawInputMd', function (newValue, oldValue) {
-        if(!newValue) {
-          this.imageStorage = [];
+      const md = this;
+      this.$watch('rawInputMd', (newValue: string) => {
+        if (!newValue) {
+          md.imageStorage = [];
         }
         localStorage.setItem('md.content', newValue);
-      }.bind(this));
-      this.$watch('imageStorage', function (newValue, oldValue) {
+      });
+      this.$watch('imageStorage', (newValue: string) => {
         localStorage.setItem('md.images', JSON.stringify(newValue));
       });
       const parsedHtmlNode: Element = this.$refs.parsedHtmlNode as Element;
@@ -108,13 +109,13 @@
                 const result = imageReader.result!.toString() || '';
                 const image = new MdImage({
                   id: 0,
-                  name: "图片描述",
+                  name: '图片描述',
                   data: result,
-              });
+                });
                 this.addImage(image);
-                  this.editHelper!
-                    .insertTextAtCursor(`![${image.name}](./${image.id})` || '')
-                    .then(output => this.rawInputMd = output);
+                this.editHelper!
+                  .insertTextAtCursor(`![${image.name}](./${image.id})` || '')
+                  .then((output: string) => this.rawInputMd = output);
               }
             };
             if (oFile) {
