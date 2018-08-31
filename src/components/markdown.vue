@@ -46,7 +46,11 @@
 
     private loadDefaultContent() {
       const content: string | null = localStorage.getItem('md.content');
-      this.imageStorage = JSON.parse(localStorage.getItem('md.images') || '') as MdImage[];
+      try {
+        this.imageStorage = JSON.parse(localStorage.getItem('md.images') || '[]') as MdImage[];
+      } catch (e) {
+        this.imageStorage = [];
+      }
       if (this.imageStorage && this.imageStorage.constructor === Array && this.imageStorage.length > 0) {
         this.imageStorage.forEach((image: MdImage) => {
           markdown.image_add(`./${image.id}`, image.data);
