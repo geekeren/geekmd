@@ -20,4 +20,9 @@ export default class EditHelper {
       this.inputTextArea.focus();
     });
   }
+
+  public syncElementScrolling(e1: HTMLElement, e2: HTMLElement) {
+    e2.scrollTop = (e1.scrollTop + e1.offsetHeight) / (e1.scrollHeight) * e2.scrollHeight - e2.offsetHeight;
+    e2.scrollTop *= e1.scrollTop / (e1.scrollHeight - e1.offsetHeight);
+  }
 }

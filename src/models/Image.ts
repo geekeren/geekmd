@@ -1,10 +1,10 @@
 export default class MdImage {
   public id: string;
-  public name: string;
+  public alt: string;
   public data: string;
   constructor(props: any) {
     this.id = props.id;
-    this.name = props.name;
+    this.alt = props.alt;
     this.data = props.data;
   }
 }
