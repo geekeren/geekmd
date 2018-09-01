@@ -214,14 +214,3 @@ hr {
 		transform: rotate(-25deg)
 	}
 }
-
-textarea {
-	font-size: 1em;
-	line-height: 1.5em;
-}
-
-header {
-	padding: 0.6em 30px;
-	position: absolute;
-	z-index: 1000;
-}

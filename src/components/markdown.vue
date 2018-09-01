@@ -1,9 +1,31 @@
 <template>
   <div id="markdown" class='markdown-container'>
-    <div class='markdown-input-section section'>
-      <header>
-        <span class='title menu_item'>极客MD编辑器</span>
-      </header>
+    <header>
+      <span class='title menu_item'>极客MD编辑器</span>
+      <div class='menu_group right'>
+        <button class='menu_item' ref='button'>复制</button>
+        <button class='menu_item'
+                v-bind:class="{active: viewState.length === 1 && viewState[0] === 'edit'}"
+                @click="viewState = ['edit']">仅编辑</button>
+        <button class='menu_item'
+                v-bind:class="{active: viewState.length === 1 && viewState[0] === 'preview'}"
+                @click="viewState = ['preview']">仅预览</button>
+        <button class='menu_item'
+                v-bind:class="{active: viewState.indexOf('edit') >= 0 && viewState.indexOf('preview') >= 0}"
+                @click="viewState = ['edit', 'preview']">编辑|预览</button>
+      </div>
+    </header>
+    <div class='markdown-input-section section' v-if="viewState.indexOf('edit') >= 0">
+      <div class='subject-input'
+           v-if='showSubjectInput'>
+        <!--<label for="emailSubject">邮件主题</label>-->
+        <textarea
+            id='emailSubject'
+            type='text'
+            v-model='rawEmailSubjectInput'
+            placeholder="请输入邮件主题">
+        </textarea>
+      </div>
       <textarea
           autocomplete='off'
           ref='inputTextArea'
@@ -12,14 +34,16 @@
           v-model='rawInputMd'>
       </textarea>
     </div>
-    <div class='html-preview-section section'>
-      <header>
-        <button class='menu_item' ref='button'>复制</button>
-      </header>
+    <div class='html-preview-section section' v-if="viewState.indexOf('preview') >= 0">
       <div class='html-preview-content content'
            ref='parsedHtmlNode'>
         <div class="mail-container">
           <div class='content-container'>
+            <div class="content-header">
+              <img style="width: 100%" src="../assets/header.png"/>
+              <div class="title" v-html="emailSubject() || '<空主题>'">
+              </div>
+            </div>
             <div class="content-body" v-html='parsedHtml()'>
             </div>
             <div class="content-footer">
@@ -34,23 +58,21 @@
   </div>
 </template>
 <script lang='ts'>
-  declare module 'pica' {
-    export function resize(from: any, to: any, option: any);
-  }
-
   import {Component, Vue} from 'vue-property-decorator';
   import Clipboard from 'clipboard';
   import debounce from 'debounce';
   import markdown from './markdown';
   import EditHelper from '../utils/edit-helper';
   import MdImage from '../models/Image';
-  import pica from 'pica';
 
   @Component
   export default class Markdown extends Vue {
+    public viewState: string[] = ['edit','preview'];
     public rawInputMd: string = '';
+    public rawEmailSubjectInput: string = '极客MD编辑器\n用Markdown写邮件';
     public editHelper: EditHelper | null = null;
     public imageStorage: MdImage[] = [];
+    public showSubjectInput: boolean = true;
 
     private mounted() {
       this.editHelper = new EditHelper(this.$refs.inputTextArea as HTMLTextAreaElement);
@@ -59,7 +81,6 @@
     }
 
     private loadDefaultContent() {
-      const content: string | null = localStorage.getItem('md.content');
       try {
         this.imageStorage = JSON.parse(localStorage.getItem('md.images') || '[]') as MdImage[];
       } catch (e) {
@@ -72,6 +93,11 @@
       } else {
         this.imageStorage = [];
       }
+      const subject: string | null = localStorage.getItem('md.emailSubjectInput');
+      if(subject) {
+        this.rawEmailSubjectInput = subject;
+      }
+      const content: string | null = localStorage.getItem('md.content');
       if (!content) {
         this.$http.get('/data/example.md')
           .then((data: any) => {
@@ -84,6 +110,9 @@
 
     private registerEvents() {
       const md = this;
+      this.$watch('rawEmailSubjectInput', (newValue: string) => {
+        debounce(() => localStorage.setItem('md.emailSubjectInput', newValue), 500)();
+      });
       this.$watch('rawInputMd', (newValue: string) => {
         if (!newValue) {
           md.imageStorage = [];
@@ -151,17 +180,28 @@
       markdown.image_add(`${image.id}`, image.data);
     }
 
+    private emailSubject() {
+      if (this.rawEmailSubjectInput) {
+        const titles: string[] = this.rawEmailSubjectInput.split('\n');
+        return `<div class="sub-title">${titles[0]}</div>${titles[1] || ''}`;
+      }
+      return '< 空主题 >';
+    }
     private parsedHtml() {
       if (this.rawInputMd) {
         const mdToParsed = this.parseRawMd(this.rawInputMd);
         return markdown.render(mdToParsed);
       }
-      return "内容为空"
+      return '内容为空';
     }
 
     private onInputScroll(e: Event) {
-      this.editHelper!.syncElementScrolling(e.target, this.$refs.parsedHtmlNode);
+      this.showSubjectInput = (e.target as HTMLElement).scrollTop > 10 ? false : true;
+      if (e.srcElement) {
+        this.editHelper!.syncElementScrolling(e.srcElement as HTMLElement, this.$refs.parsedHtmlNode);
+      }
     }
+
     private onCopy(e: any) {
       alert('复制成功!');
     }
@@ -185,6 +225,12 @@
     display: flex;
     flex-direction: row;
     background: #eee;
+    header {
+      width: 100%;
+      padding: 0.6em 30px;
+      position: absolute;
+      z-index: 1000;
+    }
     .section {
       position: relative;
       text-align: left;
@@ -204,7 +250,7 @@
       margin-top: 3em;
     }
     .content {
-      padding: 14px 14px 200px 14px;
+      padding: 6.5em 1em 10em 1em;
       flex: 1;
       overflow: auto;
       -webkit-overflow-scrolling: touch;
@@ -215,41 +261,74 @@
       background-color: transparent;
       border: none;
       resize: none;
-      /*border-radius: .4rem;*/
+      font-size: 1em;
+      line-height: 1.5em;
       box-shadow: none;
       box-sizing: inherit;
-      color: #fff;
+      color: #cde6f5;
       width: 100%;
       outline: solid #20d6ff 1px;
-      padding-top: 3.5em;
+      padding-top: 7em;
     }
     .markdown-input-section {
       background: #333;
+      max-width: 840px;
+      margin: 0 auto;
       header {
         .title {
           color: #20d6ff;
         }
       }
+      .subject-input {
+        font-size: 16px;
+        top: 40px;
+        position: absolute;
+        width: 100%;
+        color: white;
+        border-bottom: dashed #ddd 1px;
+        textarea {
+          color: white;
+          background: #00000000;
+          border: none;
+          outline: none;
+          font-size: 1em;
+          font-weight: bold;
+          width: 100%;
+          text-align: center;
+          resize: none;
+        }
+      }
+    }
+    .menu_group {
+      display: inline;
+      text-align: right;
+      .menu_item {
+        cursor: pointer;
+        user-select: none;
+        border: solid 1px #e6f1ff;
+        outline: none;
+        margin: 0 3px;
+        background: #7ba9c3;
+        color: white;
+        padding: 6px 12px;
+        border-radius: 3px;
+        font-size: 1em;
+      }
+      .active {
+        background: #1e6bb8;
+      }
+    }
+
+    .right {
+      float: right;
     }
     .html-preview-section {
       background: #fff;
+      .html-preview-content {
+        padding-top: 3.5em;
+      }
       .copyright-info {
         display: none;
-      }
-      header {
-        text-align: right;
-        right: 0px;
-        .menu_item {
-          background: #1e6bb8;
-          color: white;
-          padding: 8px 12px;
-        }
-
-        .menu_item:hover {
-          background: #20d6ff;
-          box-shadow: #20d6ff;
-          cursor: pointer;
-        }
       }
     }
     .mail-container {
@@ -264,7 +343,7 @@
         border: 0.5px solid #d8e7f3;
         .content-header {
           width: 100%;
-          height: 150px;
+          min-height: 150px;
           position: relative;
           display: inline-flex;
           align-items: center;
@@ -277,8 +356,17 @@
           .title {
             width: 100%;
             position: absolute;
-            font-size: 2em;
             text-align: center;
+            color: #022d48;
+            padding: 30px 10px 10px 10px;;
+            word-wrap: break-word;
+            word-break: normal;
+            font-size: 0.9em;
+            .sub-title {
+              font-size: 2em;
+              line-height: 1.2em;
+              font-weight: bold;
+            }
           }
         }
         .content-body {

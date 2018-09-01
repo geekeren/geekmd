@@ -7,7 +7,7 @@ body {
 	margin: 0;
 	font-family: Helvetica, Arial, sans-serif;
 	font-size: 15px;
-	line-height: 1.5;
+	line-height: 1.6em;
 	color: #50616D;
 }
 
@@ -74,7 +74,7 @@ blockquote {
 	padding: 0 1rem;
 	margin-left: 0;
 	color: #819198;
-	border-left: 0.3rem solid #dce6f0;
+	border-left: 0.3rem solid #bed5e2;
 }
 
 blockquote > :first-child {
@@ -119,10 +119,10 @@ dl dd {
 }
 
 hr {
-	height: 2px;
+	height: 1px;
 	padding: 0;
 	margin: 1rem 0;
-	background-color: #eff0f1;
+	background-color: #bed5e2;
 	border: 0;
 }
 
@@ -213,14 +213,4 @@ hr {
 	25%, 75% {
 		transform: rotate(-25deg)
 	}
-}
-
-textarea {
-	font-size: 1em;
-	line-height: 1.1em;
-}
-
-header {
-	padding: 0.6em 30px;
-	position: absolute;
 }
