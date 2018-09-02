@@ -16,23 +16,25 @@
       </div>
     </header>
     <div class='markdown-input-section section' v-if="viewState.indexOf('edit') >= 0">
-      <div class='subject-input'
-           v-if='showSubjectInput'>
-        <!--<label for="emailSubject">邮件主题</label>-->
-        <textarea
-            id='emailSubject'
-            type='text'
-            v-model='rawEmailSubjectInput'
-            placeholder="请输入邮件主题">
+      <div class='markdown-input-container'>
+        <div class='subject-input'
+             v-if='showSubjectInput'>
+          <!--<label for="emailSubject">邮件主题</label>-->
+          <textarea
+              id='emailSubject'
+              type='text'
+              v-model='rawEmailSubjectInput'
+              placeholder="请输入邮件主题">
         </textarea>
-      </div>
-      <textarea
-          autocomplete='off'
-          ref='inputTextArea'
-          class='edit-text-area content'
-          @scroll="onInputScroll"
-          v-model='rawInputMd'>
+        </div>
+        <textarea
+            autocomplete='off'
+            ref='inputTextArea'
+            class='edit-text-area content'
+            @scroll="onInputScroll"
+            v-model='rawInputMd'>
       </textarea>
+      </div>
     </div>
     <div class='html-preview-section section' v-if="viewState.indexOf('preview') >= 0">
       <div class='html-preview-content content'
@@ -192,14 +194,12 @@
         const mdToParsed = this.parseRawMd(this.rawInputMd);
         return markdown.render(mdToParsed);
       }
-      return '内容为空';
+      return '<p style="margin-top: 100px;text-align: center;color: #5e6772">内容为空</p>';
     }
 
     private onInputScroll(e: Event) {
-      this.showSubjectInput = (e.target as HTMLElement).scrollTop > 10 ? false : true;
-      if (e.srcElement) {
-        this.editHelper!.syncElementScrolling(e.srcElement as HTMLElement, this.$refs.parsedHtmlNode);
-      }
+      this.showSubjectInput = (e.target as HTMLElement).scrollTop <= 10;
+      this.editHelper!.syncElementScrolling(e.srcElement as HTMLElement, this.$refs.parsedHtmlNode as HTMLElement);
     }
 
     private onCopy(e: any) {
@@ -216,181 +216,5 @@
   }
 </script>
 <style lang='scss'>
-
-  .markdown-container {
-    width: 100%;
-    height: 100%;
-    flex: 2;
-    display: -webkit-flex;
-    display: flex;
-    flex-direction: row;
-    background: #eee;
-    header {
-      width: 100%;
-      padding: 0.6em 30px;
-      position: absolute;
-      z-index: 1000;
-    }
-    .section {
-      position: relative;
-      text-align: left;
-      -webkit-box-flex: 1;
-      -ms-flex: 1;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      overflow-x: hidden;
-      overflow-y: auto;
-      margin: 0px;
-      /*-webkit-border-radius: 2px;*/
-      /*border-radius: 2px;*/
-    }
-    .content-container {
-      min-height: 100%;
-      margin-top: 3em;
-    }
-    .content {
-      padding: 6.5em 1em 10em 1em;
-      flex: 1;
-      overflow: auto;
-      -webkit-overflow-scrolling: touch;
-    }
-    .edit-text-area {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      background-color: transparent;
-      border: none;
-      resize: none;
-      font-size: 1em;
-      line-height: 1.5em;
-      box-shadow: none;
-      box-sizing: inherit;
-      color: #cde6f5;
-      width: 100%;
-      outline: solid #20d6ff 1px;
-      padding-top: 7em;
-    }
-    .markdown-input-section {
-      background: #333;
-      max-width: 840px;
-      margin: 0 auto;
-      header {
-        .title {
-          color: #20d6ff;
-        }
-      }
-      .subject-input {
-        font-size: 16px;
-        top: 40px;
-        position: absolute;
-        width: 100%;
-        color: white;
-        border-bottom: dashed #ddd 1px;
-        textarea {
-          color: white;
-          background: #00000000;
-          border: none;
-          outline: none;
-          font-size: 1em;
-          font-weight: bold;
-          width: 100%;
-          text-align: center;
-          resize: none;
-        }
-      }
-    }
-    .menu_group {
-      display: inline;
-      text-align: right;
-      .menu_item {
-        cursor: pointer;
-        user-select: none;
-        border: solid 1px #e6f1ff;
-        outline: none;
-        margin: 0 3px;
-        background: #7ba9c3;
-        color: white;
-        padding: 6px 12px;
-        border-radius: 3px;
-        font-size: 1em;
-      }
-      .active {
-        background: #1e6bb8;
-      }
-    }
-
-    .right {
-      float: right;
-    }
-    .html-preview-section {
-      background: #fff;
-      .html-preview-content {
-        padding-top: 3.5em;
-      }
-      .copyright-info {
-        display: none;
-      }
-    }
-    .mail-container {
-      min-height: 100vh;
-      .content-container {
-        background: #ffffff;
-        max-width: 840px;
-        width: 100%;
-        min-height: calc(100vh - 60px);
-        margin: 0 auto;
-        box-shadow: 3px 5px 20px #b8dcec;
-        border: 0.5px solid #d8e7f3;
-        .content-header {
-          width: 100%;
-          min-height: 150px;
-          position: relative;
-          display: inline-flex;
-          align-items: center;
-          img {
-            top: 0;
-            height: 100%;
-            width: 100%;
-            position: absolute;
-          }
-          .title {
-            width: 100%;
-            position: absolute;
-            text-align: center;
-            color: #022d48;
-            padding: 30px 10px 10px 10px;;
-            word-wrap: break-word;
-            word-break: normal;
-            font-size: 0.9em;
-            .sub-title {
-              font-size: 2em;
-              line-height: 1.2em;
-              font-weight: bold;
-            }
-          }
-        }
-        .content-body {
-          padding: 3.5em 2em;
-          h1, h2, h3, h4, h5 {
-            color: #125da1;
-            margin-bottom: 1em;
-          }
-          li {
-            font-weight: 450;
-          }
-        }
-
-      }
-      .copyright-info {
-        display: block;
-        max-width: 860px;
-        margin: 0 auto;
-        padding: 12px;
-        font-size: 12px;
-        text-align: right;
-        font-style: italic;
-      }
-    }
-  }
-
+  @import "./markdown";
 </style>
