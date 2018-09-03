@@ -36,12 +36,12 @@ self.__precacheManifest = [
     "url": "/themes/geedit.css"
   },
   {
-    "revision": "abc2747ac88678c6840e0707b345117d",
-    "url": "/themes/TechRadar/style.css"
-  },
-  {
     "revision": "a557a98ff88621a6f27736536ef601ee",
     "url": "/data/preview3.jpeg"
+  },
+  {
+    "revision": "abc2747ac88678c6840e0707b345117d",
+    "url": "/themes/TechRadar/style.css"
   },
   {
     "revision": "dd90fe11cc301bdd99ed283526fa1858",
