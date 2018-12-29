@@ -138,12 +138,8 @@
         position: relative;
         display: inline-flex;
         align-items: center;
-        img {
-          top: 0;
-          height: 100%;
-          width: 100%;
-          position: absolute;
-        }
+        background: url("../assets/header.png");
+        background-size: contain;
         .title {
           width: 100%;
           position: absolute;

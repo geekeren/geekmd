@@ -42,7 +42,6 @@
         <div class="mail-container">
           <div class='content-container'>
             <div class="content-header">
-              <img style="width: 100%" src="../assets/header.png"/>
               <div class="title" v-html="emailSubject() || '<空主题>'">
               </div>
             </div>
