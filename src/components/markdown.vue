@@ -41,7 +41,7 @@
            ref='parsedHtmlNode'>
         <div class="mail-container">
           <div class='content-container'>
-            <div class="content-header">
+            <div class="content-header" v-bind:style="background()">
               <div class="title" v-html="emailSubject() || '<空主题>'">
               </div>
             </div>
@@ -179,6 +179,13 @@
       image.id = `./images/${new Date().getTime()+ '_' + this.imageStorage.length + 1}.pic`;
       this.imageStorage.push(image);
       markdown.image_add(`${image.id}`, image.data);
+    }
+
+    private background() {
+      const rootPath = `${location.protocol}//${location.hostname}:${location.port}`
+      return {
+        backgroundImage: `url("${rootPath}/themes/tech-radar/images/header.png")`
+      };
     }
 
     private emailSubject() {
