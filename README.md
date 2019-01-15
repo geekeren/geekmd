@@ -7,9 +7,6 @@
 
 >妈妈再也不用担心我的邮件排版了!
 
-
-![加我微信，关注"极客MD"](https://upload-images.jianshu.io/upload_images/2154287-ffa8d2b528dec1a4?imageMogr2/auto-orient/strip%7CimageView2/2/w/200)
-
 ## Project setup
 
 - Install Dependencies: `yarn install`
@@ -19,3 +16,17 @@
 - Compiles and minifies for production: `yarn run build`
 
 - Lints and fixes files: `yarn run lint`
+
+## Preview
+
+![编辑邮件，粘贴到邮箱效果预览](./docs/data/preview.png)
+
+![QQ邮箱收到邮件的效果预览](./docs/data/preview2.jpeg)
+
+![Mac Mail收到邮件的效果预览](./docs/data/preview3.jpeg)
+
+
+## Follow Me
+![加我微信，关注"极客MD"](https://upload-images.jianshu.io/upload_images/2154287-ffa8d2b528dec1a4?imageMogr2/auto-orient/strip%7CimageView2/2/w/200)
+
+
