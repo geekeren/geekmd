@@ -13,6 +13,7 @@
         <button class='menu_item'
                 v-bind:class="{active: viewState.indexOf('edit') >= 0 && viewState.indexOf('preview') >= 0}"
                 @click="viewState = ['edit', 'preview']">编辑|预览</button>
+        <button class='menu_item' @click="reset">重置</button>
       </div>
     </header>
     <div class='markdown-input-section section' v-if="viewState.indexOf('edit') >= 0">
@@ -74,6 +75,13 @@ export default class Markdown extends Vue {
   public editHelper: EditHelper | null = null;
   public imageStorage: MdImage[] = [];
   public showSubjectInput: boolean = true;
+
+  private reset() {
+    localStorage.removeItem('md.images');
+    localStorage.removeItem('md.emailSubjectInput');
+    localStorage.removeItem('md.content');
+    this.loadDefaultContent();
+  }
 
   private mounted() {
     this.editHelper = new EditHelper(this.$refs.inputTextArea as HTMLTextAreaElement);
