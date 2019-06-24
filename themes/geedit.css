@@ -1,0 +1,151 @@
+@import "tech-radar/style.css";
+table {
+	display: table;
+	width: 100%;
+}
+
+table tr:nth-child(2n) {
+	background-color: #f8f8f8;
+}
+
+.task-list-list.checked {
+	color: #159957;
+}
+
+.task-list-list.uncheck {
+	color: #bfc1bf;
+}
+
+.task-list-list img {
+	height: 20px;
+	width: 20px;
+	margin: 0 10px;
+	top: 4px;
+	position: relative;
+	display: inline-block;
+}
+
+ruby {
+	background-color: rgba(67, 193, 105, 0.5);
+	margin: 4px;
+	padding-right: 2px;
+	padding-left: 2px;
+}
+
+ruby rt {
+	font-style: italic;
+	background-color: rgba(67, 193, 105, 0.2);
+}
+
+figcaption {
+	text-align: center;
+	font-size: 12px;
+	padding: 8px;
+	color: #627688;
+}
+
+img {
+	margin: 0 auto;
+	display: block;
+}
+
+.prettyprint {
+	background: #eef1f5;
+	border-left: 0.3rem solid #1abc9c !important;
+	font-family: Consolas, Menlo, Courier, monospace;
+}
+
+.prettyprint pre p {
+	min-height: 10px;
+}
+
+.prettyprint li {
+	background-color: #eef1f5;
+	margin-bottom: 0;
+}
+
+.prettyprint code {
+	white-space: nowrap;
+}
+
+p {
+	font-size: 15px;
+	margin-bottom: 15px;
+	margin-top: 15px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	margin-top: 3rem;
+	margin-bottom: 2rem;
+}
+
+h1 {
+	font-size: 1.4em;
+}
+
+h2 {
+	font-size: 1.3em;
+}
+
+h3 {
+	font-size: 1.2em;
+}
+
+h4 {
+	font-size: 1.1em;
+}
+
+h5 {
+	font-size: 1em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+	letter-spacing: 0rem;
+}
+
+pre.prettyprint {
+	border: none;
+	border-left: 0.3rem solid #1abc9c !important;
+}
+
+figure {
+	margin: 0;
+}
+
+blockquote {
+	padding: 0.6rem 1rem;
+}
+
+blockquote, dl, figure, form, ol, p, pre, table, ul {
+	margin-bottom: 16px;
+}
+
+blockquote p {
+	font-size: 0.9em;
+}
+
+ol li,
+ul li,
+li p {
+	font-size: 14px;
+	color: #384452;
+}
+
+header button {
+	border: solid 1px #e6f1ff;
+	outline: none;
+}
+
+header .menu_item {
+	padding: 2px 8px;
+	background: rgba(150, 150, 150, 0.15);
+	color: #20d6ff;
+	border-radius: 3px;
+	font-size: 1em;
+}
