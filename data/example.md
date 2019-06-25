@@ -5,8 +5,9 @@
 
 >妈妈再也不用担心我的邮件排版了!
 
+- 开源地址：https://github.com/geekeren/geekmd
 
-![加我微信，关注"极客MD"](https://upload-images.jianshu.io/upload_images/2154287-ffa8d2b528dec1a4?imageMogr2/auto-orient/strip%7CimageView2/2/w/200)
+![加我微信，关注"极客MD"](https://wangbaiyuan.cn/wp-content/uploads/2018/08/qrcode_for_gh_5f4c204be810_344.jpg)
 
 # 下面是示例文档：
 
