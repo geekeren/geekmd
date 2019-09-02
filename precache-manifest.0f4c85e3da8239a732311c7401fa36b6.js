@@ -44,7 +44,7 @@ self.__precacheManifest = [
     "url": "/css/app.ddcbd2fd.css"
   },
   {
-    "revision": "c662d793e10dfb601003f07aca63e49d",
+    "revision": "9eca2a95fe945fa6951c33211656ef57",
     "url": "/CNAME"
   }
 ];
