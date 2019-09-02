@@ -19,11 +19,11 @@
 
 ## Preview
 
-![编辑邮件，粘贴到邮箱效果预览](./docs/data/preview.png)
+![编辑邮件，粘贴到邮箱效果预览](./assets/preview.png)
 
-![QQ邮箱收到邮件的效果预览](./docs/data/preview2.jpeg)
+![QQ邮箱收到邮件的效果预览](./assets/preview2.jpeg)
 
-![Mac Mail收到邮件的效果预览](./docs/data/preview3.jpeg)
+![Mac Mail收到邮件的效果预览](./assets/preview3.jpeg)
 
 
 ## Follow Me

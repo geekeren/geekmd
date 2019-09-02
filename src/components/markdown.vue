@@ -52,7 +52,7 @@
             </div>
           </div>
           <div class='copyright-info'>
-            本邮件自豪地采用“<a href='https://geekmd.cn'>极客MD</a>”编辑并排版
+            本邮件自豪地采用“<a :href="pageUrl">极客MD</a>”编辑并排版
           </div>
         </div>
       </div>
@@ -75,6 +75,7 @@ export default class Markdown extends Vue {
   public editHelper: EditHelper | null = null;
   public imageStorage: MdImage[] = [];
   public showSubjectInput: boolean = true;
+  public pageUrl: string = location.origin;
 
   private reset() {
     localStorage.removeItem('md.images');
