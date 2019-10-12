@@ -1,7 +1,14 @@
 #markdown .html-preview-section h2{
-	margin-top: 0px;
+	margin-top: 0;
+	min-width: 90px;
 	display: inline-block;
 	border-bottom: solid 2px #125da1;
 	padding-top: 30px;
-	background: url(https://mmbiz.qpic.cn/mmbiz_jpg/aaVJqS7LaMJxj0CpeNUaibOpcTZSYCotwQic74HcfF3Oa4qCHW7OKwdECxxIZqxlC2TzlciceNzW3SaZH4o36aUZw/640?wx_fmt=jpeg) 0% 50% / 90px no-repeat scroll transparent;
+	background: url('/themes/tech-radar/images/h2-bg.jpeg') 0% 50% / 90px no-repeat scroll transparent;
+}
+
+
+#markdown .html-preview-section .content-header {
+	background: url('/themes/tech-radar/images/header.png');
+	background-size: contain;
 }
