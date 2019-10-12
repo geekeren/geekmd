@@ -5,16 +5,16 @@
 </template>
 
 <script lang='ts'>
-  import {Vue} from 'vue-property-decorator';
-  import Component from 'vue-class-component';
-  import markdown from './components/markdown.vue';
+import { Vue } from 'vue-property-decorator';
+import Component from 'vue-class-component';
+import markdown from './components/markdown.vue';
 
   @Component({
-    components: {markdown},
+    components: { markdown },
   })
-  export default class App extends Vue {
+export default class App extends Vue {
 
-  }
+}
 </script>
 
 <style lang='scss'>
@@ -23,7 +23,7 @@
   #app {
     width: 100%;
     height: 100vh;
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    font-family: "SF Pro SC","SF Pro Display","SF Pro Icons","PingFang SC","Helvetica Neue","Helvetica","Arial",sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;

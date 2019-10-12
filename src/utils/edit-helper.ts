@@ -1,5 +1,6 @@
 export default class EditHelper {
   private inputTextArea: HTMLTextAreaElement;
+
   constructor(textArea: HTMLTextAreaElement) {
     this.inputTextArea = textArea;
   }

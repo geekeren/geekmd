@@ -5,6 +5,6 @@ import './registerServiceWorker';
 Vue.config.productionTip = false;
 Vue.use(VueResource);
 new Vue({
-    render: (h) => h(App),
+    render: h => h(App),
 }).$mount('#app');
 //# sourceMappingURL=main.js.map

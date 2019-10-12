@@ -134,17 +134,16 @@
       border: 0.5px solid #d8e7f3;
       .content-header {
         width: 100%;
+        height: 150px;
         min-height: 150px;
         position: relative;
-        display: inline-flex;
-        align-items: center;
         background-size: contain;
         .title {
           width: 100%;
           position: absolute;
           text-align: center;
           color: #022d48;
-          padding: 30px 10px 10px 10px;;
+          padding: 50px 10px 10px 10px;;
           word-wrap: break-word;
           word-break: normal;
           font-size: 0.9em;
@@ -178,9 +177,15 @@
     }
   }
 }
-@-webkit-keyframes show
-{
-  0% {opacity:0;}
-  50% {opacity:1;}
-  100% {opacity:1;}
+
+@-webkit-keyframes show {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
 }

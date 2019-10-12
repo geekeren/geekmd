@@ -1,6 +1,6 @@
-import * as MarkdownIt from "markdown-it";
-import Token from "markdown-it/lib/token";
-import { highlightAuto } from "highlight.js";
+import * as MarkdownIt from 'markdown-it';
+import Token from 'markdown-it/lib/token';
+import { highlightAuto } from 'highlight.js';
 import emoji from 'markdown-it-emoji';
 import sub from 'markdown-it-sub';
 // 上标
@@ -20,35 +20,34 @@ import taskLists from 'markdown-it-task-lists';
 import toc from 'markdown-it-toc';
 import imagePreview from 'markdown-it-images-preview';
 import implicitFigures from 'markdown-it-implicit-figures';
+
 console.log(MarkdownIt.tokens);
-const markdown = MarkdownIt({
+const markdownRender = MarkdownIt({
   html: true,
   xhtmlOut: true,
   breaks: true,
   langPrefix: 'language-',
   linkify: true,
   typographer: true,
-  highlight: (code) => {
-    return highlightAuto(code).value;
-  },
+  highlight: code => highlightAuto(code).value,
 
 });
 
-markdown.use(emoji)
-    .use(sup)
-    .use(sub)
-    .use(deflist)
-    .use(abbr)
-    .use(footnote)
-    // .use(insert)
-    .use(mark)
-    .use(taskLists)
-    .use(imagePreview)
-    .use(implicitFigures, {
-      dataType: false,
-      figcaption: true,
-      tabindex: false,
-      link: false
-    })
-    .use(toc);
-export default markdown;
+markdownRender.use(emoji)
+  .use(sup)
+  .use(sub)
+  .use(deflist)
+  .use(abbr)
+  .use(footnote)
+// .use(insert)
+  .use(mark)
+  .use(taskLists)
+  .use(imagePreview)
+  .use(implicitFigures, {
+    dataType: false,
+    figcaption: true,
+    tabindex: false,
+    link: false,
+  })
+  .use(toc);
+export default markdownRender;
