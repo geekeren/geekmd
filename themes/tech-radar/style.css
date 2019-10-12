@@ -4,11 +4,11 @@
 	display: inline-block;
 	border-bottom: solid 2px #125da1;
 	padding-top: 30px;
-	background: url('/themes/tech-radar/images/h2-bg.jpeg') 0% 50% / 90px no-repeat scroll transparent;
+	background: url('https://md.wangbaiyuan.cn/themes/tech-radar/images/h2-bg.jpeg') 0% 50% / 90px no-repeat scroll transparent;
 }
 
 
 #markdown .html-preview-section .content-header {
-	background: url('/themes/tech-radar/images/header.png');
+	background: url('https://md.wangbaiyuan.cn/themes/tech-radar/images/header.png');
 	background-size: contain;
 }
