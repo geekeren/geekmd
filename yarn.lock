@@ -5938,6 +5938,13 @@ markdown-it-ins@^3.0.0:
   resolved "https://registry.yarnpkg.com/markdown-it-ins/-/markdown-it-ins-3.0.0.tgz#b1b56824c78dc66e52b0fc97531b317cd78d79d2"
   integrity sha512-+vyAdBuMGwmT2yMlAFJSx2VR/0QZ1onQ/Mkkmr4l9tDFOh5sVoAgRbkgbuSsk+sxJ9vaMH/IQ323ydfvQrPO/Q==
 
+markdown-it-linkify-images@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/markdown-it-linkify-images/-/markdown-it-linkify-images-1.1.1.tgz#1d98bc8219c61ae2f2bf9d258295e74d8a45864c"
+  integrity sha512-1IEmAaAjIgAwY+tZI0sxDXdy9QKHutj5cN0lH2JBiSZt+2NYKrWRJj0cloQW3OFIfP2MLFA1E+6OLJhXPiLgNw==
+  dependencies:
+    markdown-it "^8.4.2"
+
 markdown-it-mark@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/markdown-it-mark/-/markdown-it-mark-3.0.0.tgz#27c3e39ef3cc310b2dde5375082c9fa912983cda"
@@ -5966,6 +5973,17 @@ markdown-it@^10.0.0:
   dependencies:
     argparse "^1.0.7"
     entities "~2.0.0"
+    linkify-it "^2.0.0"
+    mdurl "^1.0.1"
+    uc.micro "^1.0.5"
+
+markdown-it@^8.4.2:
+  version "8.4.2"
+  resolved "https://registry.yarnpkg.com/markdown-it/-/markdown-it-8.4.2.tgz#386f98998dc15a37722aa7722084f4020bdd9b54"
+  integrity sha512-GcRz3AWTqSUphY3vsUqQSFMbgR38a4Lh3GWlHRh/7MRwz8mcu9n2IO7HOh+bXHrR9kOPDl5RNCaEsrneb+xhHQ==
+  dependencies:
+    argparse "^1.0.7"
+    entities "~1.1.1"
     linkify-it "^2.0.0"
     mdurl "^1.0.1"
     uc.micro "^1.0.5"
@@ -9673,6 +9691,13 @@ vue-clipboard2@^0.3.1:
   dependencies:
     clipboard "^2.0.0"
 
+vue-drawer-layout@^1.3.0:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/vue-drawer-layout/-/vue-drawer-layout-1.3.0.tgz#c95905b2110739771e65035b8162f94697b94a35"
+  integrity sha512-htCu9a6QlvLzV9vZ89W3/jMa1YQO/ObSK4s5urae+hXOaVbf2fpJO/agVESQZsEPYkwbsjQY9EjsX1XNgv5yqg==
+  dependencies:
+    vue "^2.6.8"
+
 vue-eslint-parser@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/vue-eslint-parser/-/vue-eslint-parser-2.0.3.tgz#c268c96c6d94cfe3d938a5f7593959b0ca3360d1"
@@ -9745,7 +9770,7 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.10:
+vue@^2.6.10, vue@^2.6.8:
   version "2.6.10"
   resolved "https://registry.yarnpkg.com/vue/-/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha512-ImThpeNU9HbdZL3utgMCq0oiMzAkt1mcgy3/E6zWC/G6AaQoeuFdsl9nDhTDU3X1R6FK7nsIUuRACVcjI+A2GQ==

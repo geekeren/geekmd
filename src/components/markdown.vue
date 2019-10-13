@@ -3,6 +3,7 @@
     <header>
       <span class='title menu_item'>极客MD编辑器</span>
       <div class='menu_group right'>
+        <button class='menu_item' @click="reset">重置</button>
         <button class='menu_item' ref='button'>复制</button>
         <button class='menu_item'
                 :class="{active: viewState.length === 1 && viewState[0] === 'edit'}"
@@ -13,10 +14,11 @@
                 @click="viewState = ['preview']">仅预览
         </button>
         <button class='menu_item'
-                :class="{active: viewState.indexOf('edit') >= 0 && viewState.indexOf('preview') >= 0}"
+                :class="{
+                  active: viewState.indexOf('edit') >= 0 && viewState.indexOf('preview') >= 0
+                }"
                 @click="viewState = ['edit', 'preview']">编辑|预览
         </button>
-        <button class='menu_item' @click="reset">重置</button>
       </div>
     </header>
     <div class='markdown-input-section section'
@@ -26,26 +28,26 @@
              v-if='showSubjectInput'>
           <!--<label for="emailSubject">邮件主题</label>-->
           <textarea
-              id='emailSubject'
-              type='text'
-              v-model='rawEmailSubjectInput'
-              placeholder="请输入邮件主题">
+            id='emailSubject'
+            type='text'
+            v-model='rawEmailSubjectInput'
+            placeholder="请输入邮件主题">
         </textarea>
         </div>
         <textarea
-            autocomplete='off'
-            ref='inputTextArea'
-            class='edit-text-area content'
-            @scroll="onInputScroll"
-            v-model='rawInputMd'>
+          autocomplete='off'
+          ref='inputTextArea'
+          class='edit-text-area content'
+          @scroll="onInputScroll"
+          v-model='rawInputMd'>
       </textarea>
       </div>
     </div>
     <Preview
-        v-if="viewState.indexOf('preview') >= 0"
-        ref="preview"
-        :subject="rawEmailSubjectInput"
-        :content="rawInputMd"
+      v-if="viewState.indexOf('preview') >= 0"
+      ref="preview"
+      :subject="rawEmailSubjectInput"
+      :content="rawInputMd"
     />
   </div>
 </template>
@@ -144,8 +146,8 @@ export default class Markdown extends Vue {
       const clipboard = new Clipboard(copyBtn, {
         target: () => this.$refs.preview.previewHtmlNode() as HTMLElement,
       });
-      clipboard.on('success', this.onCopy);
-      clipboard.on('error', this.onError);
+      clipboard.on('success', Markdown.onCopy);
+      clipboard.on('error', Markdown.onError);
 
       const inputTextArea: HTMLTextAreaElement = this.$refs.inputTextArea as HTMLTextAreaElement;
       inputTextArea.addEventListener('paste', (e: ClipboardEvent) => {

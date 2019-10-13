@@ -12,9 +12,9 @@ body {
 }
 
 a {
+	word-break: break-word;
 	color: #1e6bb8;
 	text-decoration: none;
-	font-weight: bold;
 }
 
 a:hover {
@@ -123,10 +123,11 @@ dl dd {
 }
 
 hr {
-	height: 1px;
+	height: 2px;
 	padding: 0;
 	margin: 1rem 0;
 	background-color: #bed5e2;
+	background-image: linear-gradient(to right, rgb(26, 149, 165), rgb(38, 198, 218));
 	border: 0;
 }
 

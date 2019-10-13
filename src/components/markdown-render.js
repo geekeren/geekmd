@@ -20,6 +20,7 @@ import taskLists from 'markdown-it-task-lists';
 import toc from 'markdown-it-toc';
 import imagePreview from 'markdown-it-images-preview';
 import implicitFigures from 'markdown-it-implicit-figures';
+import mili from 'markdown-it-linkify-images';
 
 console.log(MarkdownIt.tokens);
 const markdownRender = MarkdownIt({
@@ -34,12 +35,17 @@ const markdownRender = MarkdownIt({
 });
 
 markdownRender.use(emoji)
+  .use(mili, {
+    target: '_blank',
+    linkClass: 'custom-link-class',
+    imgClass: 'custom-img-class'
+  })
   .use(sup)
   .use(sub)
   .use(deflist)
   .use(abbr)
   .use(footnote)
-// .use(insert)
+  // .use(insert)
   .use(mark)
   .use(taskLists)
   .use(imagePreview)
@@ -50,4 +56,8 @@ markdownRender.use(emoji)
     link: false,
   })
   .use(toc);
+console.log(markdownRender.renderer.rules);
+markdownRender.renderer.rules.table_open = function (tokens, idx) {
+  return '<table class="table">';
+};
 export default markdownRender;

@@ -97,9 +97,10 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-      border: solid 1px #ffffff;
+      border: none;
       outline: none;
       background: #bed5e2;
+      margin: 0 2px;
       color: white;
       padding: 4px 10px;
       border-radius: 3px;
@@ -107,6 +108,7 @@
     }
     .active {
       background: #1e6bb8;
+      background-image: linear-gradient(to right, #001f6b, #22cbf1);
     }
   }
 
@@ -124,13 +126,15 @@
   }
   .mail-container {
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
     .content-container {
       background: #ffffff;
       max-width: 840px;
       width: 100%;
       min-height: calc(100vh - 60px);
       margin: 0 auto;
-      box-shadow: 3px 5px 20px #b8dcec;
       border: 0.5px solid #d8e7f3;
       .content-header {
         width: 100%;
