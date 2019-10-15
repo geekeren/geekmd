@@ -1,7 +1,6 @@
 <template>
   <div id="markdown" class='markdown-container'>
     <header>
-      <span class='title menu_item'>极客MD编辑器</span>
       <div class='menu_group right'>
         <button class='menu_item' @click="reset">重置</button>
         <button class='menu_item' ref='button'>复制</button>

@@ -1,10 +1,9 @@
 <template>
   <div id='app'>
-    <span class='title menu_item'>极客MD编辑器</span>
     <vue-drawer-layout
       ref="drawer"
       :drawer-width="300"
-      :enable="true"
+      :enable="false"
       :animatable="true"
       :z-index="0"
       :drawable-distance="Math.floor(200/3)"
@@ -16,7 +15,12 @@
       <div class="drawer" slot="drawer" style="height: 100vh">
         <div class="text">请登录</div>
       </div>
-      <markdown class="content" slot="content"/>
+      <div class="drawer-content" slot="content">
+        <header class="drawer-content-header">
+          <span class='drawer-content-title menu_item'>极客MD编辑器</span>
+        </header>
+        <markdown/>
+      </div>
     </vue-drawer-layout>
   </div>
 </template>
@@ -63,6 +67,15 @@ export default class App extends Vue {
     }
     .drawer-mask {
       transition: opacify ease-in-out 0.5s;
+    }
+    .drawer-content {
+      height: 100vh;
+    }
+    .drawer-content-header {
+      padding: 10px 20px;
+      position: absolute;
+      top: 0;
+      z-index: 10000;
     }
   }
 
