@@ -37,7 +37,7 @@
 所以，Fargate算其中的哪一种呢？
 
 ## 你的“船”才是问题所在
-![Life jacket is advised](https://upload-images.jianshu.io/upload_images/2154287-7766ea55c642f6af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![Life jacket is advised](https://wangbaiyuan.cn/wp-content/uploads/2018/08/20180823175209119.jpg)
 
 Docker使容器技术普及开来，便很快成为开发中被广泛采用的新标准。
 
@@ -45,7 +45,7 @@ Docker使容器技术普及开来，便很快成为开发中被广泛采用的�
 
 一个任务可以是一起工作的容器的任何实例。它可以是从运行一个服务的Web应用，多个微服务，数据库和反向代理，还可以是定期运行的批处理shell脚本。
 
-作为使用ECS的“老司机”，我很喜欢它，曾经在一段时间内用得很爽，但到最后，我发现在管理EC2 Instance的同时，还必须管理一些额外的层（任务和容器），这让ECS变得越来越复杂。（译者注，请参考[AWS“层”的概念](https://docs.aws.amazon.com/zh_cn/opsworks/latest/userguide/welcome_classic.html#welcome-classic-stacks)）
+作为使用ECS的“老司机”，我很喜欢它，曾经在一段时间内用得很爽，但到最后，我发现在管理EC2 Instance的同时，还必须管理一些额外的层（任务和容器），这让ECS变得越来越复杂。（译者注，请参考[AWS“层”的概念](https://wangbaiyuan.cn/wp-content/uploads/2018/08/20180823175211214.jpg)）
 
 同时，我对ECS的安全性也不甚满意，层越多，就越要保持警惕，而每一层都带来了更多的复杂性，以及误配置、漏洞的可能性。
 
