@@ -7,11 +7,16 @@
 
 - 开源地址：https://github.com/geekeren/geekmd
 
-![加我微信，关注"极客MD"](https://wangbaiyuan.cn/wp-content/uploads/2018/08/qrcode_for_gh_5f4c204be810_344.jpg)
+
+![加我微信，关注"极客MD"](https://wangbaiyuan.cn/wp-content/uploads/2018/08/qrcode_for_gh_5f4c204be810_344.jpg) | ![加我微信，关注"极客MD"](https://wangbaiyuan.cn/wp-content/uploads/image/wechat_zanshang.jpeg)
+:--: | :--:
+加我微信，关注"极客MD" | 微信打赏
+
+-----------
 
 # 下面是示例文档：
 
----
+
 
 >本文翻译自：[Freecodecamp](https://medium.freecodecamp.org/amazon-fargate-goodbye-infrastructure-3b66c7e3e413), 原文地址：[An intro to Amazon Fargate: what it is, why it’s awesome (and not), and when to use it](https://medium.freecodecamp.org/amazon-fargate-goodbye-infrastructure-3b66c7e3e413), 英文原作者为 [Emmanuel Marboeuf](https://medium.freecodecamp.org/@emmanuelboumeraf)
 
@@ -79,7 +84,7 @@ Docker使容器技术普及开来，便很快成为开发中被广泛采用的�
 
 你只需定义每个容器所需的资源，它将为你完成复杂的任务而不必再管理多个“层”之间的访问规则，您可以像在单个EC2实例之间那样调度容器那样。
 
-![Fargate上的容器](https://upload-images.jianshu.io/upload_images/2154287-8a5e36853c379c7d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+![Fargate上的容器](https://wangbaiyuan.cn/wp-content/uploads/2018/08/20180823175211214.jpg)
 
 这就让你的容器像水面上的船只拥有自己的帆、船舵、船员一样，自己可以漂流到想要去的地方。
 
@@ -116,7 +121,8 @@ Docker使容器技术普及开来，便很快成为开发中被广泛采用的�
 让我们直面这样的现实：云服务（IaaS）比拥有自己的基础架构**更昂贵**（如果你想要按需扩展你的基础架构）。同样的道理，不必关心配置、管理和扩展服务器是要需要付出代价。如果你的应用十分简单，云服务并不是最优解。
 
 Fargate实好，但是[其价格](https://aws.amazon.com/fargate/pricing/)几乎是等配置EC2实例的价格的 4 倍（例如t2.medium）这让我们很难抉择，让我们期待它能够降价。
-![Fargate 和 EC2 价格对比 (USD)](https://upload-images.jianshu.io/upload_images/2154287-b37e12d5127eeeed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+
+![Fargate 和 EC2 价格对比（USD）](https://wangbaiyuan.cn/wp-content/uploads/2018/08/20180823175211315.jpg)
 
 
 
