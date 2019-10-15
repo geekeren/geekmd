@@ -44,7 +44,7 @@ markdownRender.use(emoji)
   // .use(insert)
   .use(mark)
   .use(taskLists)
-  // .use(imagePreview)
+  .use(imagePreview)
   .use(implicitFigures, {
     dataType: false,
     figcaption: true,
