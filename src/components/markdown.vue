@@ -107,7 +107,7 @@ export default class Markdown extends Vue {
       }
       if (this.imageStorage && this.imageStorage.constructor === Array && this.imageStorage.length > 0) {
         this.imageStorage.forEach((image: MdImage) => {
-          markdown.imageAdd(`${image.id}`, image.data);
+          markdown.image_add(`${image.id}`, image.data);
         });
       } else {
         this.imageStorage = [];
@@ -194,7 +194,7 @@ export default class Markdown extends Vue {
     private addImage(image: MdImage) {
       image.id = `./images/${`${new Date().getTime()}_${this.imageStorage.length}${1}`}.pic`;
       this.imageStorage.push(image);
-      markdown.imageAdd(`${image.id}`, image.data);
+      markdown.image_add(`${image.id}`, image.data);
     }
 
     private onInputScroll(e: Event) {
