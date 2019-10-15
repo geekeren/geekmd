@@ -139,9 +139,9 @@ Fargate实好，但是[其价格](https://aws.amazon.com/fargate/pricing/)几乎
 
 # 效果预览
 
-![编辑邮件，粘贴到邮箱效果预览](./data/preview.png)
+![编辑邮件，粘贴到邮箱效果预览](https://raw.githubusercontent.com/geekeren/geekmd/master/docs/assets/preview.png)
 
-![QQ邮箱收到邮件的效果预览](./data/preview2.jpeg)
+![QQ邮箱收到邮件的效果预览](https://raw.githubusercontent.com/geekeren/geekmd/master/docs/assets/preview2.jpeg)
 
-![Mac Mail收到邮件的效果预览](./data/preview3.jpeg)
+![Mac Mail收到邮件的效果预览](https://raw.githubusercontent.com/geekeren/geekmd/master/docs/assets/preview3.jpeg)
 
