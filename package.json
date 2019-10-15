@@ -9,6 +9,7 @@
     "release:web": "gh-pages -d dist"
   },
   "dependencies": {
+    "@geekeren/markdown-it-implicit-figures": "^0.9.2",
     "@types/clipboard": "^2.0.1",
     "@types/debounce": "^1.2.0",
     "@types/highlight.js": "^9.12.3",
@@ -24,7 +25,6 @@
     "markdown-it-footnote": "^3.0.2",
     "markdown-it-for-inline": "^0.1.1",
     "markdown-it-images-preview": "^1.0.1",
-    "markdown-it-implicit-figures": "^0.9.0",
     "markdown-it-ins": "^3.0.0",
     "markdown-it-linkify-images": "^1.1.1",
     "markdown-it-mark": "^3.0.0",

@@ -713,6 +713,11 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
+"@geekeren/markdown-it-implicit-figures@^0.9.2":
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/@geekeren/markdown-it-implicit-figures/-/markdown-it-implicit-figures-0.9.2.tgz#c4e3222c604518e9943b1032a01fac47ae7839da"
+  integrity sha512-/K60gO/y4b1QufFaGwqzwjrtAw329MFW/wCqT8r3EmcpZ0EjPLSk6zD5BV32ehkAdIXv2jSktRvsyXdyfyyfmw==
+
 "@hapi/address@2.x.x":
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.0.0.tgz#9f05469c88cb2fd3dcd624776b54ee95c312126a"
@@ -5928,10 +5933,6 @@ markdown-it-for-inline@^0.1.1:
 markdown-it-images-preview@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/markdown-it-images-preview/-/markdown-it-images-preview-1.0.1.tgz#17d6eb8491cccd2343d4e4419a1abe9ca43c0bbb"
-
-markdown-it-implicit-figures@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/markdown-it-implicit-figures/-/markdown-it-implicit-figures-0.9.0.tgz#21bf562ab4fd177828febb5e24eda571cf9d1a58"
 
 markdown-it-ins@^3.0.0:
   version "3.0.0"

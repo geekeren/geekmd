@@ -19,8 +19,9 @@ import mark from 'markdown-it-mark';
 import taskLists from 'markdown-it-task-lists';
 import toc from 'markdown-it-toc';
 import imagePreview from 'markdown-it-images-preview';
-import implicitFigures from 'markdown-it-implicit-figures';
+import implicitFigures from '@geekeren/markdown-it-implicit-figures';
 import mili from 'markdown-it-linkify-images';
+import iterator from 'markdown-it-for-inline';
 
 console.log(MarkdownIt.tokens);
 const markdownRender = MarkdownIt({
@@ -35,11 +36,6 @@ const markdownRender = MarkdownIt({
 });
 
 markdownRender.use(emoji)
-  .use(mili, {
-    target: '_blank',
-    linkClass: 'custom-link-class',
-    imgClass: 'custom-img-class'
-  })
   .use(sup)
   .use(sub)
   .use(deflist)
@@ -48,12 +44,16 @@ markdownRender.use(emoji)
   // .use(insert)
   .use(mark)
   .use(taskLists)
-  .use(imagePreview)
+  // .use(imagePreview)
   .use(implicitFigures, {
     dataType: false,
     figcaption: true,
     tabindex: false,
-    link: false,
+    link: true,
+    figcaption_open: "div class='figcaption'",
+    figure_open: "div class='figure'",
+    figcaption_close: "div",
+    figure_close: "div"
   })
   .use(toc);
 console.log(markdownRender.renderer.rules);
