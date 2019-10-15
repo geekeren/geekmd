@@ -9,6 +9,7 @@
 
 
 #markdown .html-preview-section .content-header {
+	background-color: #5e6772;
 	background: url('https://md.wangbaiyuan.cn/themes/tech-radar/images/header.png');
 	background-size: contain;
 }
