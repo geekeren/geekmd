@@ -115,7 +115,7 @@
       width: 100%;
       min-height: calc(100vh - 60px);
       margin: 0 auto;
-      border: 0.5px solid #d8e7f3; }
+      border: 1px solid #d8e7f3; }
       .markdown-container .mail-container .content-container .content-header {
         border-top: solid 4px #125da1;
         width: 100%;
