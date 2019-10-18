@@ -56,9 +56,9 @@ import Clipboard from 'clipboard';
 import debounce from 'debounce';
 import markdown from './markdown-render';
 import Preview from './preview';
-import EditHelper from '../utils/edit-helper';
-import MdImage from '../models/Image';
-import ThemeService from '../services/theme-service';
+import EditHelper from '@/utils/edit-helper';
+import MdImage from '@/models/Image';
+import ThemeService from '@/services/theme-service';
 
   @Component({
     components: {

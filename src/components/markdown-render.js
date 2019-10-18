@@ -20,7 +20,6 @@ import toc from 'markdown-it-toc';
 import imagePreview from 'markdown-it-images-preview';
 import implicitFigures from '@geekeren/markdown-it-implicit-figures';
 
-console.log(MarkdownIt.tokens);
 const markdownRender = MarkdownIt({
   html: true,
   xhtmlOut: true,
@@ -53,7 +52,6 @@ markdownRender.use(emoji)
     figure_close: 'div',
   })
   .use(toc);
-console.log(markdownRender.renderer.rules);
 markdownRender.renderer.rules.table_open = function () {
   return '<table class="table">';
 };
