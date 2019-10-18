@@ -3,7 +3,7 @@ module.exports = {
   productionSourceMap: false,
   pages: {
     index: {
-      entry: 'src/main.ts',
+      entry: 'src/main.js',
       template: 'public/index.html',
       chunks: ['chunk-vendors', 'chunk-common', 'index'],
     },

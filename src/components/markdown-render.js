@@ -52,12 +52,12 @@ markdownRender.use(emoji)
     link: true,
     figcaption_open: "div class='figcaption'",
     figure_open: "div class='figure'",
-    figcaption_close: "div",
-    figure_close: "div"
+    figcaption_close: 'div',
+    figure_close: 'div',
   })
   .use(toc);
 console.log(markdownRender.renderer.rules);
-markdownRender.renderer.rules.table_open = function (tokens, idx) {
+markdownRender.renderer.rules.table_open = function () {
   return '<table class="table">';
 };
 export default markdownRender;

@@ -21,33 +21,36 @@
   </div>
 </template>
 
-<script lang='ts'>
-import { Component, Prop, Vue } from 'vue-property-decorator';
+<script>
+import { Component, Vue } from 'vue-property-decorator';
 import markdown from '../markdown-render';
 
-  @Component
+  @Component({
+    props: {
+      subject: String,
+      content: String,
+    },
+  })
 export default class Preview extends Vue {
-    @Prop()
-    public subject!: string;
+    subject = '';
 
-    @Prop()
-    public content!: string;
+    content = '';
 
-    public pageUrl: string = window.location.origin;
+    pageUrl = window.location.origin;
 
-    public previewHtmlNode() {
+    previewHtmlNode() {
       return this.$refs.parsedHtmlNode;
     }
 
-    private emailSubject() {
+    emailSubject() {
       if (this.subject) {
-        const titles: string[] = this.subject.split('\n');
+        const titles = this.subject.split('\n');
         return `<div class="sub-title">${titles[0]}</div>${titles[1] || ''}`;
       }
       return '< 空主题 >';
     }
 
-    private parsedHtml() {
+    parsedHtml() {
       if (this.content) {
         const mdToParsed = Preview.parseRawMd(this.content);
         return markdown.render(mdToParsed);
@@ -55,10 +58,10 @@ export default class Preview extends Vue {
       return '<p style="margin-top: 100px;text-align: center;color: #5e6772">内容为空</p>';
     }
 
-    static parseRawMd(rawMd: string) {
+    static parseRawMd(rawMd) {
       return rawMd.replace('\n', '\r\n\n');
     }
-}
+  }
 
 </script>
 

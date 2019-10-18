@@ -50,7 +50,7 @@
     />
   </div>
 </template>
-<script lang='ts'>
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import Clipboard from 'clipboard';
 import debounce from 'debounce';
@@ -66,60 +66,55 @@ import ThemeService from '../services/theme-service';
     },
   })
 export default class Markdown extends Vue {
-    $refs!: {
-      preview: Preview,
-      inputTextArea: HTMLTextAreaElement,
-      button: HTMLElement,
-    };
+    viewState = ['edit', 'preview'];
 
-    public viewState: string[] = ['edit', 'preview'];
+    rawInputMd = '';
 
-    public rawInputMd: string = '';
+    rawEmailSubjectInput = '极客MD编辑器\n用Markdown写邮件';
 
-    public rawEmailSubjectInput: string = '极客MD编辑器\n用Markdown写邮件';
+    editHelper = null;
 
-    public editHelper: EditHelper | null = null;
+    imageStorage = [];
 
-    public imageStorage: MdImage[] = [];
+    showSubjectInput= true;
 
-    public showSubjectInput: boolean = true;
+    themeService = new ThemeService();
 
-    public themeService: ThemeService = new ThemeService();
-
-    private reset() {
+    reset() {
       localStorage.removeItem('md.images');
       localStorage.removeItem('md.emailSubjectInput');
       localStorage.removeItem('md.content');
       this.loadDefaultContent();
     }
 
-    private mounted() {
-      this.editHelper = new EditHelper(this.$refs.inputTextArea as HTMLTextAreaElement);
+    mounted() {
+      this.editHelper = new EditHelper(this.$refs.inputTextArea);
       this.loadDefaultContent();
       this.registerEvents();
     }
 
-    private loadDefaultContent() {
+    loadDefaultContent() {
       try {
-        this.imageStorage = JSON.parse(localStorage.getItem('md.images') || '[]') as MdImage[];
+        this.imageStorage = JSON.parse(localStorage.getItem('md.images') || '[]');
       } catch (e) {
         this.imageStorage = [];
       }
-      if (this.imageStorage && this.imageStorage.constructor === Array && this.imageStorage.length > 0) {
-        this.imageStorage.forEach((image: MdImage) => {
+      if (this.imageStorage && this.imageStorage.constructor === Array
+        && this.imageStorage.length > 0) {
+        this.imageStorage.forEach((image) => {
           markdown.image_add(`${image.id}`, image.data);
         });
       } else {
         this.imageStorage = [];
       }
-      const subject: string | null = localStorage.getItem('md.emailSubjectInput');
+      const subject = localStorage.getItem('md.emailSubjectInput');
       if (subject) {
         this.rawEmailSubjectInput = subject;
       }
-      const content: string | null = localStorage.getItem('md.content');
+      const content = localStorage.getItem('md.content');
       if (!content) {
         this.$http.get('/data/example.md')
-          .then((data: any) => {
+          .then((data) => {
             this.rawInputMd = data.body;
           });
       } else {
@@ -127,29 +122,29 @@ export default class Markdown extends Vue {
       }
     }
 
-    private registerEvents() {
+    registerEvents() {
       const md = this;
-      this.$watch('rawEmailSubjectInput', (newValue: string) => {
+      this.$watch('rawEmailSubjectInput', (newValue) => {
         debounce(() => localStorage.setItem('md.emailSubjectInput', newValue), 500)();
       });
-      this.$watch('rawInputMd', (newValue: string) => {
+      this.$watch('rawInputMd', (newValue) => {
         if (!newValue) {
           md.imageStorage = [];
         }
         debounce(() => localStorage.setItem('md.content', newValue), 1000)();
       });
-      this.$watch('imageStorage', (newValue: string) => {
+      this.$watch('imageStorage', (newValue) => {
         debounce(() => localStorage.setItem('md.images', JSON.stringify(newValue)), 1000)();
       });
-      const copyBtn: HTMLElement = this.$refs.button as HTMLElement;
+      const copyBtn = this.$refs.button;
       const clipboard = new Clipboard(copyBtn, {
-        target: () => this.$refs.preview.previewHtmlNode() as HTMLElement,
+        target: () => this.$refs.preview.previewHtmlNode(),
       });
       clipboard.on('success', Markdown.onCopy);
       clipboard.on('error', Markdown.onError);
 
-      const inputTextArea: HTMLTextAreaElement = this.$refs.inputTextArea as HTMLTextAreaElement;
-      inputTextArea.addEventListener('paste', (e: ClipboardEvent) => {
+      const { inputTextArea } = this.$refs;
+      inputTextArea.addEventListener('paste', (e) => {
         const { clipboardData } = e;
         if (clipboardData) {
           const { items } = clipboardData;
@@ -158,7 +153,7 @@ export default class Markdown extends Vue {
           }
           const types = clipboardData.types || [];
           let item = null;
-          for (let i = 0; i < types.length; i++) {
+          for (let i = 0; i < types.length; i += 1) {
             if (types[i] === 'Files') {
               item = items[i];
               break;
@@ -171,16 +166,15 @@ export default class Markdown extends Vue {
             const imageReader = new FileReader();
             imageReader.onload = () => {
               if (imageReader) {
-                const result = imageReader.result!.toString() || '';
+                const result = imageReader.result.toString() || '';
                 const image = new MdImage({
                   id: 0,
                   alt: '图片描述',
                   data: result,
                 });
                 this.addImage(image);
-                this.editHelper!
-                  .insertTextAtCursor(`\n![${image.alt}](${image.id})\n\n` || '')
-                  .then((output: string) => this.rawInputMd = output);
+                this.editHelper.insertTextAtCursor(`\n![${image.alt}](${image.id})\n\n` || '')
+                  .then((output) => { this.rawInputMd = output; });
               }
             };
             if (oFile) {
@@ -191,26 +185,26 @@ export default class Markdown extends Vue {
       });
     }
 
-    private addImage(image: MdImage) {
-      image.id = `./images/${`${new Date().getTime()}_${this.imageStorage.length}${1}`}.pic`;
+    addImage(image) {
+      image.id(`./images/${`${new Date().getTime()}_${this.imageStorage.length}${1}`}.pic`);
       this.imageStorage.push(image);
       markdown.image_add(`${image.id}`, image.data);
     }
 
-    private onInputScroll(e: Event) {
-      this.showSubjectInput = (e.target as HTMLElement).scrollTop <= 10;
-      this.editHelper!.syncElementScrolling(e.srcElement as HTMLElement,
-        this.$refs.preview.previewHtmlNode() as HTMLElement);
+    onInputScroll(e) {
+      this.showSubjectInput = (e.target).scrollTop <= 10;
+      this.editHelper.syncElementScrolling(e.srcElement,
+        this.$refs.preview.previewHtmlNode());
     }
 
-    static onCopy(e: any) {
+    static onCopy() {
       alert('复制成功!');
     }
 
-    static onError(e: any) {
+    static onError() {
       alert('复制失败');
     }
-}
+  }
 </script>
 <style lang='scss'>
   @import "./markdown";

@@ -10,17 +10,17 @@
   </div>
 </template>
 
-<script lang='ts'>
+<script>
 import { Component, Vue } from 'vue-property-decorator';
 import GitHub from 'github-api';
 
-  @Component
+@Component
 export default class Sidebar extends Vue {
-    private isLoggedIn: boolean = false;
+    isLoggedIn = false;
 
-    private user: Object = {};
+    user = {};
 
-    private mounted() {
+    mounted() {
       const accessToken = localStorage.getItem('access_token');
       if (!accessToken) return;
       const gh = new GitHub({ token: accessToken });
@@ -48,7 +48,7 @@ export default class Sidebar extends Vue {
       });
     }
 
-    private login() {
+    login() {
       const width = 360;
       const height = 600;
       const top = (window.screen.availHeight - 30 - height) / 2;

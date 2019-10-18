@@ -44,10 +44,10 @@ Vue.component(DrawerLayout.name, DrawerLayout);
     },
   })
 export default class App extends Vue {
-  handleToggleDrawer(toggled) {
-    this.$refs.drawer.toggle();
+    handleToggleDrawer(toggled) {
+      this.$refs.drawer.toggle();
+    }
   }
-}
 </script>
 
 <style lang='scss'>
