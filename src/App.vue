@@ -31,7 +31,7 @@ import { DrawerLayout } from 'vue-drawer-layout';
 
 import Component from 'vue-class-component';
 
-import markdown from './components/markdown.vue';
+import markdown from './components/markdown';
 import sidebar from './components/sidebar';
 
 Vue.component(DrawerLayout.name, DrawerLayout);
@@ -44,7 +44,7 @@ Vue.component(DrawerLayout.name, DrawerLayout);
     },
   })
 export default class App extends Vue {
-    handleToggleDrawer(toggled) {
+    handleToggleDrawer() {
       this.$refs.drawer.toggle();
     }
   }

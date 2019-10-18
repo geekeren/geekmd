@@ -1,5 +1,4 @@
 import * as MarkdownIt from 'markdown-it';
-import Token from 'markdown-it/lib/token';
 import { highlightAuto } from 'highlight.js';
 import emoji from 'markdown-it-emoji';
 import sub from 'markdown-it-sub';
@@ -20,8 +19,6 @@ import taskLists from 'markdown-it-task-lists';
 import toc from 'markdown-it-toc';
 import imagePreview from 'markdown-it-images-preview';
 import implicitFigures from '@geekeren/markdown-it-implicit-figures';
-import mili from 'markdown-it-linkify-images';
-import iterator from 'markdown-it-for-inline';
 
 console.log(MarkdownIt.tokens);
 const markdownRender = MarkdownIt({

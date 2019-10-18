@@ -111,11 +111,11 @@
     color: #2c3e50; }
     .markdown-container .mail-container .content-container {
       background: #ffffff;
-      max-width: 840px;
+      max-width: 720px;
       width: 100%;
       min-height: calc(100vh - 60px);
       margin: 0 auto;
-      border: 1px solid #d8e7f3; }
+      border: 0.5px solid #d8e7f3; }
       .markdown-container .mail-container .content-container .content-header {
         border-top: solid 4px #125da1;
         width: 100%;
@@ -137,7 +137,7 @@
             line-height: 1.2em;
             font-weight: bold; }
       .markdown-container .mail-container .content-container .content-body {
-        padding: 3.5em 2em; }
+        padding: 2.5em 2em; }
         .markdown-container .mail-container .content-container .content-body h1, .markdown-container .mail-container .content-container .content-body h2, .markdown-container .mail-container .content-container .content-body h3, .markdown-container .mail-container .content-container .content-body h4, .markdown-container .mail-container .content-container .content-body h5 {
           color: #125da1;
           margin-bottom: 1em; }
