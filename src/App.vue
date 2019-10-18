@@ -13,10 +13,10 @@
       @mask-click="handleToggleDrawer"
     >
       <div class="drawer" slot="drawer" style="height: 100vh">
-        <div class="text">请登录</div>
+        <sidebar/>
       </div>
       <div class="drawer-content" slot="content">
-        <header class="drawer-content-header">
+        <header class="drawer-content-header" @click="handleToggleDrawer">
           <span class='drawer-content-title menu_item'>极客MD编辑器</span>
         </header>
         <markdown/>
@@ -32,6 +32,7 @@ import { DrawerLayout } from 'vue-drawer-layout';
 import Component from 'vue-class-component';
 
 import markdown from './components/markdown.vue';
+import sidebar from './components/sidebar';
 
 Vue.component(DrawerLayout.name, DrawerLayout);
 
@@ -39,7 +40,7 @@ Vue.component(DrawerLayout.name, DrawerLayout);
   @Component({
     components: {
       markdown,
-      'vue-drawer-layout': DrawerLayout,
+      sidebar,
     },
   })
 export default class App extends Vue {
