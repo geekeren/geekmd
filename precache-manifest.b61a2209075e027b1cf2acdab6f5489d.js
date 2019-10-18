@@ -12,8 +12,8 @@ self.__precacheManifest = [
     "url": "/themes/tech-radar/style.css"
   },
   {
-    "revision": "067ba738fec93733d4fce55106bf51d7",
-    "url": "/themes/basic.css"
+    "revision": "715dfa30c80c3b22422a6e5dd8805b54",
+    "url": "/themes/geedit.css"
   },
   {
     "revision": "7a8fdb90527f9cac1b83",
@@ -36,15 +36,15 @@ self.__precacheManifest = [
     "url": "/themes/tech-radar/images/h2-bg.jpeg"
   },
   {
-    "revision": "715dfa30c80c3b22422a6e5dd8805b54",
-    "url": "/themes/geedit.css"
+    "revision": "067ba738fec93733d4fce55106bf51d7",
+    "url": "/themes/basic.css"
   },
   {
-    "revision": "d5b4c4b45c84bdb6bcb8",
-    "url": "/js/index.404fbb4a.js"
+    "revision": "3a5f15f24a882400c5d9",
+    "url": "/js/index.ffb27267.js"
   },
   {
-    "revision": "47cf1eb3296c4bbaa49075dbc5450d95",
+    "revision": "ba5bba1599ece4e8d3c1b496ce2f9914",
     "url": "/index.html"
   },
   {
@@ -52,7 +52,7 @@ self.__precacheManifest = [
     "url": "/data/example.md"
   },
   {
-    "revision": "d5b4c4b45c84bdb6bcb8",
+    "revision": "3a5f15f24a882400c5d9",
     "url": "/css/index.5ef860da.css"
   },
   {
