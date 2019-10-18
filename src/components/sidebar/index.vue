@@ -48,7 +48,8 @@ export default class Sidebar extends Vue {
       });
     }
 
-    static login() {
+    // eslint-disable-next-line class-methods-use-this
+    login() {
       const width = 360;
       const height = 600;
       const top = (window.screen.availHeight - 30 - height) / 2;

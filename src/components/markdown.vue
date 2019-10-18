@@ -193,7 +193,7 @@ export default class Markdown extends Vue {
 
     onInputScroll(e) {
       this.showSubjectInput = (e.target).scrollTop <= 10;
-      this.editHelper.syncElementScrolling(e.srcElement,
+      EditHelper.syncElementScrolling(e.srcElement,
         this.$refs.preview.previewHtmlNode());
     }
 
