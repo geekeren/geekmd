@@ -76,7 +76,7 @@ export default class Markdown extends Vue {
 
     imageStorage = [];
 
-    showSubjectInput= true;
+    showSubjectInput = true;
 
     themeService = new ThemeService();
 
@@ -174,7 +174,9 @@ export default class Markdown extends Vue {
                 });
                 this.addImage(image);
                 this.editHelper.insertTextAtCursor(`\n![${image.alt}](${image.id})\n\n` || '')
-                  .then((output) => { this.rawInputMd = output; });
+                  .then((output) => {
+                    this.rawInputMd = output;
+                  });
               }
             };
             if (oFile) {
@@ -192,6 +194,7 @@ export default class Markdown extends Vue {
     }
 
     onInputScroll(e) {
+      if (!this.$refs.preview) return;
       this.showSubjectInput = (e.target).scrollTop <= 10;
       EditHelper.syncElementScrolling(e.srcElement,
         this.$refs.preview.previewHtmlNode());

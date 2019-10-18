@@ -32,10 +32,6 @@ import markdown from '../markdown-render';
     },
   })
 export default class Preview extends Vue {
-    subject = '';
-
-    content = '';
-
     pageUrl = window.location.origin;
 
     previewHtmlNode() {
