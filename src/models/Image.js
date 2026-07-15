@@ -4,8 +4,4 @@ export default class MdImage {
     this.alt = props.alt;
     this.data = props.data;
   }
-
-  set id(value) {
-    this.id = value;
-  }
 }

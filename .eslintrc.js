@@ -1,28 +1,25 @@
 module.exports = {
   root: true,
   env: {
+    browser: true,
+    es2021: true,
     node: true,
   },
   extends: [
-    'plugin:vue/essential',
-    '@vue/airbnb',
+    'eslint:recommended',
+    'plugin:vue/recommended',
   ],
   rules: {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'import/extensions': ['error', 'always', {
-      js: 'never',
-      mjs: 'never',
-      jsx: 'never',
-      ts: 'never',
-      tsx: 'never',
-      vue: 'never',
-    }],
+    'vue/html-self-closing': 'off',
+    'vue/max-attributes-per-line': 'off',
+    'vue/multi-word-component-names': 'off',
+    'vue/no-v-html': 'off',
+    'vue/require-default-prop': 'off',
   },
   parserOptions: {
-    ecmaFeatures: {
-      legacyDecorators: true,
-    },
-    parser: 'babel-eslint',
+    ecmaVersion: 2021,
+    sourceType: 'module',
   },
 };

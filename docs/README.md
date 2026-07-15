@@ -9,13 +9,13 @@
 
 ## Project setup
 
-- Install Dependencies: `yarn install`
+- Install Dependencies: `npm install`
 
-- Compiles and hot-reloads for development: `yarn start`
+- Compiles and hot-reloads for development: `npm run start`
 
-- Compiles and minifies for production: `yarn build`
+- Compiles and minifies for production: `npm run build`
 
-- Lints and fixes files: `yarn lint`
+- Lints files: `npm run lint`
 
 ## Preview
 
@@ -28,5 +28,4 @@
 
 ## Follow Me
 ![加我微信，关注"极客MD"](https://wangbaiyuan.cn/wp-content/uploads/2018/08/qrcode_for_gh_5f4c204be810_344.jpg)
-
 
