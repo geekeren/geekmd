@@ -1,4 +1,4 @@
-import * as MarkdownIt from 'markdown-it';
+import MarkdownIt from 'markdown-it';
 import { highlightAuto } from 'highlight.js';
 import emoji from 'markdown-it-emoji';
 import sub from 'markdown-it-sub';
@@ -16,7 +16,6 @@ import footnote from 'markdown-it-footnote';
 import mark from 'markdown-it-mark';
 // taskLists
 import taskLists from 'markdown-it-task-lists';
-import toc from 'markdown-it-toc';
 import imagePreview from 'markdown-it-images-preview';
 import implicitFigures from '@geekeren/markdown-it-implicit-figures';
 
@@ -50,8 +49,7 @@ markdownRender.use(emoji)
     figure_open: "div class='figure'",
     figcaption_close: 'div',
     figure_close: 'div',
-  })
-  .use(toc);
+  });
 markdownRender.renderer.rules.table_open = function () {
   return '<table class="table">';
 };

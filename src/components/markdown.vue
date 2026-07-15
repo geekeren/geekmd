@@ -1,44 +1,63 @@
 <template>
-  <div id="markdown" class='markdown-container'>
+  <div id="markdown" class="markdown-container">
     <header>
-      <div class='menu_group right'>
-        <button class='menu_item' @click="reset">重置</button>
-        <button class='menu_item' ref='button'>复制</button>
-        <button class='menu_item'
-                :class="{active: viewState.length === 1 && viewState[0] === 'edit'}"
-                @click="viewState = ['edit']">仅编辑
+      <div class="menu_group right">
+        <button class="menu_item" @click="reset">
+          重置
         </button>
-        <button class='menu_item'
-                :class="{active: viewState.length === 1 && viewState[0] === 'preview'}"
-                @click="viewState = ['preview']">仅预览
+        <button ref="button" class="menu_item">
+          复制
         </button>
-        <button class='menu_item'
-                :class="{
-                  active: viewState.indexOf('edit') >= 0 && viewState.indexOf('preview') >= 0
-                }"
-                @click="viewState = ['edit', 'preview']">编辑|预览
+        <button
+          class="menu_item"
+          :class="{active: viewState.length === 1 && viewState[0] === 'edit'}"
+          @click="viewState = ['edit']"
+        >
+          仅编辑
+        </button>
+        <button
+          class="menu_item"
+          :class="{active: viewState.length === 1 && viewState[0] === 'preview'}"
+          @click="viewState = ['preview']"
+        >
+          仅预览
+        </button>
+        <button
+          class="menu_item"
+          :class="{
+            active: viewState.indexOf('edit') >= 0 && viewState.indexOf('preview') >= 0
+          }"
+          @click="viewState = ['edit', 'preview']"
+        >
+          编辑|预览
         </button>
       </div>
     </header>
-    <div class='markdown-input-section section'
-         v-if="viewState.indexOf('edit') >= 0">
-      <div class='markdown-input-container'>
-        <div class='subject-input'
-             v-if='showSubjectInput'>
+    <div
+      v-if="viewState.indexOf('edit') >= 0"
+      class="markdown-input-section section"
+    >
+      <div class="markdown-input-container">
+        <div
+          v-if="showSubjectInput"
+          class="subject-input"
+        >
           <!--<label for="emailSubject">邮件主题</label>-->
           <textarea
-            id='emailSubject'
-            type='text'
-            v-model='rawEmailSubjectInput'
-            placeholder="请输入邮件主题">
+            id="emailSubject"
+            v-model="rawEmailSubjectInput"
+            type="text"
+            placeholder="请输入邮件主题"
+          >
         </textarea>
         </div>
         <textarea
-          autocomplete='off'
-          ref='inputTextArea'
-          class='edit-text-area content'
+          ref="inputTextArea"
+          v-model="rawInputMd"
+          autocomplete="off"
+          class="edit-text-area content"
           @scroll="onInputScroll"
-          v-model='rawInputMd'>
+        >
       </textarea>
       </div>
     </div>
@@ -51,47 +70,42 @@
   </div>
 </template>
 <script>
-import { Component, Vue } from 'vue-property-decorator';
 import Clipboard from 'clipboard';
 import debounce from 'debounce';
+import axios from 'axios';
 import markdown from './markdown-render';
-import Preview from './preview';
+import Preview from './preview/index.vue';
 import EditHelper from '@/utils/edit-helper';
 import MdImage from '@/models/Image';
 import ThemeService from '@/services/theme-service';
 
-  @Component({
-    components: {
-      Preview,
-    },
-  })
-export default class Markdown extends Vue {
-    viewState = ['edit', 'preview'];
-
-    rawInputMd = '';
-
-    rawEmailSubjectInput = '极客MD编辑器\n用Markdown写邮件';
-
-    editHelper = null;
-
-    imageStorage = [];
-
-    showSubjectInput = true;
-
-    themeService = new ThemeService();
-
+export default {
+  components: {
+    Preview,
+  },
+  data() {
+    return {
+      viewState: ['edit', 'preview'],
+      rawInputMd: '',
+      rawEmailSubjectInput: '极客MD编辑器\n用Markdown写邮件',
+      editHelper: null,
+      imageStorage: [],
+      showSubjectInput: true,
+      themeService: new ThemeService(),
+    };
+  },
+  mounted() {
+    this.editHelper = new EditHelper(this.$refs.inputTextArea);
+    this.loadDefaultContent();
+    this.registerEvents();
+  },
+  methods: {
     reset() {
       localStorage.removeItem('md.images');
       localStorage.removeItem('md.emailSubjectInput');
       localStorage.removeItem('md.content');
       this.loadDefaultContent();
-    }
-
-    mounted() {
-      this.editHelper = new EditHelper(this.$refs.inputTextArea);
-      this.loadDefaultContent();
-      this.registerEvents();
-    }
+    },
 
     loadDefaultContent() {
       try {
@@ -113,14 +127,14 @@ export default class Markdown extends Vue {
       }
       const content = localStorage.getItem('md.content');
       if (!content) {
-        this.$http.get('/data/example.md')
-          .then((data) => {
-            this.rawInputMd = data.body;
+        axios.get('/data/example.md')
+          .then((res) => {
+            this.rawInputMd = res.data;
           });
       } else {
         this.rawInputMd = content;
       }
-    }
+    },
 
     registerEvents() {
       const md = this;
@@ -140,8 +154,8 @@ export default class Markdown extends Vue {
       const clipboard = new Clipboard(copyBtn, {
         target: () => this.$refs.preview.previewHtmlNode(),
       });
-      clipboard.on('success', Markdown.onCopy);
-      clipboard.on('error', Markdown.onError);
+      clipboard.on('success', this.onCopy);
+      clipboard.on('error', this.onError);
 
       const { inputTextArea } = this.$refs;
       inputTextArea.addEventListener('paste', (e) => {
@@ -185,30 +199,31 @@ export default class Markdown extends Vue {
           }
         }
       });
-    }
+    },
 
     addImage(image) {
-      image.id(`./images/${`${new Date().getTime()}_${this.imageStorage.length}${1}`}.pic`);
+      image.id = `./images/${`${new Date().getTime()}_${this.imageStorage.length}${1}`}.pic`;
       this.imageStorage.push(image);
       markdown.image_add(`${image.id}`, image.data);
-    }
+    },
 
     onInputScroll(e) {
       if (!this.$refs.preview) return;
       this.showSubjectInput = (e.target).scrollTop <= 10;
       EditHelper.syncElementScrolling(e.srcElement,
         this.$refs.preview.previewHtmlNode());
-    }
+    },
 
-    static onCopy() {
+    onCopy() {
       alert('复制成功!');
-    }
+    },
 
-    static onError() {
+    onError() {
       alert('复制失败');
-    }
-  }
+    },
+  },
+};
 </script>
 <style lang='scss'>
-  @import "./markdown";
+  @use "./markdown";
 </style>

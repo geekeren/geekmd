@@ -4,11 +4,11 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <meta name="description" content="极客MD是一款专为邮件打造的Markdown编辑器，让你专注你的邮件写作，无需为邮件排版烦恼；邮件排版是一件体力活，也是职场中必备的技术活，极客MD使用Markdown语法，不需要斟酌邮件写作中颜色、结构、标题、图片的排版问题！让你专注邮件的内容" />
-    <meta name="keywords" content="markdown,md,邮件排版" />
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <link rel="stylesheet" href="./themes/basic.css">
-    <link rel="stylesheet" href="./themes/geedit.css">
+    <meta name="description" content="极客MD是一款专为邮件打造的Markdown编辑器，让你专注你的邮件写作，无需为邮件排版烦恼；邮件排版是一件体力活，也是职场中必备的技术活，极客MD使用Markdown语法，不需要斟酌邮件写作中颜色、结构、标题、图片的排版问题！让你专注邮件的内容">
+    <meta name="keywords" content="markdown,md,邮件排版">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="stylesheet" href="/themes/basic.css">
+    <link rel="stylesheet" href="/themes/geedit.css">
     <title>极客MD编辑器 | 专注你的邮件</title>
   </head>
   <body>
@@ -26,9 +26,10 @@
     </div>
     <div style="display: none">
       <script type="text/javascript">
-        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        var cnzz_protocol = (document.location.protocol === 'https:' ? ' https://' : ' http://');
         document.write(unescape("%3Cspan id='cnzz_stat_icon_1274630193'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274630193' type='text/javascript'%3E%3C/script%3E"));
       </script>
     </div>
+    <script type="module" src="/src/main.js"></script>
   </body>
 </html>

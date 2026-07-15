@@ -1,4 +1,7 @@
 const config = {
-  get: key => (process.env[`VUE_APP_${key}`]),
+  get: key => (
+    import.meta.env[`VITE_${key}`]
+    || import.meta.env[`VUE_APP_${key}`]
+  ),
 };
 export default config;

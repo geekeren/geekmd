@@ -1,11 +1,10 @@
-import queryString from 'querystring';
 import axios from 'axios';
 import config from '@/config';
 
-const parsed = queryString.parse(window.location.search.replace('?', ''));
+const params = new URLSearchParams(window.location.search);
 
 axios.post(`${config.get('AUTH_SERVICE_URL')}/auth`, {
-  code: parsed.code,
+  code: params.get('code'),
 }).then((res) => {
   console.log(res.data);
   const accessToken = res.data.access_token;

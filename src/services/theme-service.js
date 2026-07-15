@@ -1,7 +1,8 @@
 export default class ThemeService {
-  name = 'tech-radar';
-
-  repo = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/themes`;
+  constructor() {
+    this.name = 'tech-radar';
+    this.repo = `${window.location.protocol}//${window.location.hostname}:${window.location.port}/themes`;
+  }
 
   useRepo(repo) {
     this.repo = repo;

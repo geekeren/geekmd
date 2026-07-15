@@ -1,57 +1,49 @@
 <template>
-  <div id='app'>
-    <vue-drawer-layout
-      ref="drawer"
-      :drawer-width="300"
-      :enable="false"
-      :animatable="true"
-      :z-index="0"
-      :drawable-distance="Math.floor(200/3)"
-      :content-drawable="true"
-      :backdrop="true"
-      :backdrop-opacity-range="[0,0.4]"
-      @mask-click="handleToggleDrawer"
+  <div id="app">
+    <div
+      v-if="drawerOpen"
+      class="drawer-mask"
+      @click="handleToggleDrawer"
+    ></div>
+    <aside
+      class="drawer"
+      :class="{ open: drawerOpen }"
     >
-      <div class="drawer" slot="drawer" style="height: 100vh">
-        <sidebar/>
-      </div>
-      <div class="drawer-content" slot="content">
-        <header class="drawer-content-header" @click="handleToggleDrawer">
-          <span class='drawer-content-title menu_item'>极客MD编辑器</span>
-        </header>
-        <markdown/>
-      </div>
-    </vue-drawer-layout>
+      <sidebar />
+    </aside>
+    <main class="drawer-content">
+      <header class="drawer-content-header" @click="handleToggleDrawer">
+        <span class="drawer-content-title menu_item">极客MD编辑器</span>
+      </header>
+      <markdown />
+    </main>
   </div>
 </template>
 
 <script>
-import Vue from 'vue';
-import { DrawerLayout } from 'vue-drawer-layout';
+import markdown from './components/markdown.vue';
+import sidebar from './components/sidebar/index.vue';
 
-import Component from 'vue-class-component';
-
-import markdown from './components/markdown';
-import sidebar from './components/sidebar';
-
-Vue.component(DrawerLayout.name, DrawerLayout);
-
-
-  @Component({
-    components: {
-      markdown,
-      sidebar,
-    },
-  })
-export default class App extends Vue {
+export default {
+  components: {
+    markdown,
+    sidebar,
+  },
+  data() {
+    return {
+      drawerOpen: false,
+    };
+  },
+  methods: {
     handleToggleDrawer() {
-      this.$refs.drawer.toggle();
-    }
-  }
+      this.drawerOpen = !this.drawerOpen;
+    },
+  },
+};
 </script>
 
 <style lang='scss'>
-  @import '~highlight.js/styles/github.css';
+  @import 'highlight.js/styles/github.css';
 
   #app {
     width: 100%;
@@ -62,12 +54,29 @@ export default class App extends Vue {
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
     overflow: hidden;
-    .drawer-wrap {
+    .drawer {
       background: #ffffff;
       box-shadow: 2px 0 2px 2px white;
+      height: 100vh;
+      left: 0;
+      position: fixed;
+      top: 0;
+      transform: translateX(-100%);
+      transition: transform 0.2s ease-in-out;
+      width: 300px;
+      z-index: 10001;
+    }
+    .drawer.open {
+      transform: translateX(0);
     }
     .drawer-mask {
-      transition: opacify ease-in-out 0.5s;
+      background: rgba(0, 0, 0, 0.4);
+      bottom: 0;
+      left: 0;
+      position: fixed;
+      right: 0;
+      top: 0;
+      z-index: 10000;
     }
     .drawer-content {
       height: 100vh;
